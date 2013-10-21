@@ -14,6 +14,7 @@ IMAGE_INSTALL += "tzdata tzdata-europe ntp"
 IMAGE_INSTALL += "avahi-utils shairport"
 #IMAGE_INSTALL += "squeezeplay-nogui"
 IMAGE_INSTALL += "nano htop procps"
+IMAGE_INSTALL += "linuxconsole"
 
 #IMAGE_INSTALL += "edje-utils elementary-tests"
 
