@@ -1,0 +1,12 @@
+[Unit]
+Description=Calaos home automation touchscreen UI
+After=xserver-nodm.service
+
+[Service]
+ExecStart=/usr/bin/calaos_home.sh
+RemainAfterExit=no
+Type=simple
+User=root
+
+[Install]
+WantedBy=multi-user.target
