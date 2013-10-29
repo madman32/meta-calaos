@@ -4,7 +4,7 @@ After=xserver-nodm.service
 
 [Service]
 ExecStart=/usr/bin/calaos_home.sh
-RemainAfterExit=no
+Restart=always
 Type=simple
 User=root
 

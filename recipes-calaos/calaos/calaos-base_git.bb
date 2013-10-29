@@ -4,11 +4,11 @@ HOMEPAGE = "http://www.calaos.fr"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
-PR = "r13"
+PR = "r14"
 
 DEPENDS = "libsigc++-2.0 owfs log4cpp libvmime jansson lua5.1 elementary"
 
-SRCREV = "cd2387ca494624daf986d60539314858fa7c9499"
+SRCREV = "f8531d928fc8ecaeba4ce95a0f81bda7ad21de3d"
 SECTION = "x11/multimedia"
 
 S = "${WORKDIR}/git"
@@ -27,6 +27,8 @@ do_configure_prepend() {
 do_install_append() {
 	install -d ${D}${systemd_unitdir}/system
 	install -m 0644 ${WORKDIR}/calaos-server.service ${D}${systemd_unitdir}/system
+	install -m 0644 ${WORKDIR}/calaos-home.service ${D}${systemd_unitdir}/system
+	install -m 0755 ${WORKDIR}/calaos_home.sh ${D}${bindir}
 }
 
 PACKAGES = "calaos-server calaos-home calaos-base-dbg calaos-base"
@@ -35,6 +37,7 @@ FILES_calaos-server = "${bindir}/calaos_home \
                     ${systemd_unitdir}/system/calaos-server.service"
 
 FILES_calaos-home = "${bindir}/calaos_home \
+                ${bindir}/calaos_thumb \
 	            ${datadir}/calaos/* \
 	            ${datadir}/locale/* \
 	            ${systemd_unitdir}/system/calaos-home.service \
