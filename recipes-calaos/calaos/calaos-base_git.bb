@@ -28,7 +28,7 @@ do_install_append() {
 	install -m 0644 ${WORKDIR}/calaos-server.service ${D}${systemd_unitdir}/system
 }
 
-PACKAGES = "calaos-server calaos-home calaos-dbg"
+PACKAGES = "calaos-server calaos-home calaos-base-dbg calaos-base"
 
 FILES_calaos-server = "${bindir}/calaos_home \
                     ${systemd_unitdir}/system/calaos-server.service"
