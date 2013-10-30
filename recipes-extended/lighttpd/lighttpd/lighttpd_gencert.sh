@@ -5,7 +5,7 @@ set -e
 tmpdir="/tmp"
 certdir="/etc/lighttpd"
 
-if [ -f $certdir/server.pem ] && [ -f $certdir/server.key ] ; then
+if [ -f $certdir/server.pem ] ; then
     echo "certificate already exists."
     echo "To recreate the certificate, delete the file $certdir/server.pem"
     exit 0
@@ -41,9 +41,11 @@ keyUsage                        = keyEncipherment, digitalSignature
 extendedKeyUsage                = serverAuth
 EOF
 
-openssl req -new -outform PEM -config $tmpdir/cert.cnf -out $certdir/server.pem -newkey rsa:2048 -nodes -keyout $certdir/server.key -keyform PEM -days 9999 -x509
+openssl req -new -outform PEM -config $tmpdir/cert.cnf -out $tmpdir/server.pem -newkey rsa:2048 -nodes -keyout $tmpdir/server.key -keyform PEM -days 9999 -x509
 
-rm -f $tmpdir/cert.cnf
+cat $tmpdir/server.pem $tmpdir/server.key > $certdir/server.pem
+
+rm -f $tmpdir/cert.cnf $tmpdir/server.pem $tmpdir/server.key
 
 echo "Successfully generated self-signed certificate"
 
