@@ -1,14 +1,14 @@
-ESCRIPTION = "Calaos Graphical User Insterface"
+DESCRIPTION = "Calaos Graphical User Insterface"
 HOMEPAGE = "http://www.calaos.fr"
 
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
-PR = "r16"
+PR = "r17"
 
 DEPENDS = "libsigc++-2.0 owfs log4cpp libvmime jansson lua5.1 elementary"
 
-SRCREV = "f560d7224c5cc5de8807df7777a049a077718753"
+SRCREV = "bf16bec8500c56b88b70086b46812dad6006ca10"
 SECTION = "x11/multimedia"
 
 S = "${WORKDIR}/git"
@@ -31,19 +31,33 @@ do_install_append() {
 	install -m 0755 ${WORKDIR}/calaos_home.sh ${D}${bindir}
 }
 
-PACKAGES = "calaos-server calaos-home calaos-base-dbg calaos-base"
+FILES_${PN}-dbg += "${srcdir}/* ${bindir}/.debug ${libdir}/calaos/widgets/*/.debug"
+FILES_${PN}-dev += "${libdir}/calaos/widgets/*/*.la"
+
+PACKAGES = "calaos-server calaos-home calaos-base calaos-base-dbg calaos-base-dev"
+
+#Clock widget
+PACKAGES += "calaos-home-widget-clock"
+FILES_calaos-home-widget-clock = "${libdir}/calaos/widgets/clock/module.so"
+FILES_calaos-home-widget-clock += "${datadir}/calaos/widgets/clock/*.edj"
+
+#Note widget
+PACKAGES += "calaos-home-widget-note"
+FILES_calaos-home-widget-note = "${libdir}/calaos/widgets/note/module.so"
+FILES_calaos-home-widget-note += "${datadir}/calaos/widgets/note/*.edj"
 
 FILES_calaos-server = "${bindir}/calaos_server \
                     ${systemd_unitdir}/system/calaos-server.service"
 
 FILES_calaos-home = "${bindir}/calaos_home \
                 ${bindir}/calaos_thumb \
-	            ${datadir}/calaos/* \
+	            ${datadir}/calaos/default.edj \
 	            ${datadir}/locale/* \
 	            ${systemd_unitdir}/system/calaos-home.service \
 	            ${bindir}/calaos_home.sh"
 
-FILES_calaos-dbg = "${srcdir}/* ${bindir}/.debug"
+RRECOMMENDS_${PN} += "calaos-home-widget-clock \
+                      calaos-home-widget-note"
 
 SYSTEMD_SERVICE = "calaos-server.service calaos-home.service"
 
