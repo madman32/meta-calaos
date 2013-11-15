@@ -17,6 +17,7 @@ IMAGE_INSTALL += "nano htop procps"
 IMAGE_INSTALL += "linuxconsoletools"
 IMAGE_INSTALL += "openssl"
 IMAGE_INSTALL += "cpu-performance"
+IMAGE_INSTALL += "connman-wait-online"
 
 #IMAGE_INSTALL += "edje-utils elementary-tests"
 

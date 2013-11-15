@@ -1,0 +1,13 @@
+[Unit]
+Description=Connman Wait Online
+Requisite=connman.service
+After=connman.service
+Wants=network.target
+Before=network.target network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/connman-online
+
+[Install]
+WantedBy=multi-user.target
