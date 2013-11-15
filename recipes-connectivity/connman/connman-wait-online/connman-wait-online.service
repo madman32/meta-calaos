@@ -7,7 +7,7 @@ Before=network.target network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/connman-online
+ExecStart=/usr/sbin/connman-online
 
 [Install]
 WantedBy=multi-user.target
