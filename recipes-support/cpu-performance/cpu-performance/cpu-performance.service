@@ -3,7 +3,7 @@
 Description=Set CPU governor to performance
 
 [Service]
-ExecStart=/bin/echo performance > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+ExecStart=/usr/bin/cpuperf
 Type=oneshot
 
 [Install]
