@@ -1,0 +1,10 @@
+
+[Unit]
+Description=Start inputattach tool if needed by calaos_config
+
+[Service]
+ExecStart=/usr/bin/inputattach_start.sh
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target
