@@ -8,7 +8,7 @@ PR = "r21"
 
 DEPENDS = "libsigc++-2.0 owfs log4cpp libvmime jansson lua5.1 elementary"
 
-SRCREV = "bd1f8ef5ce391c593a038592753f2a4a65c3a804"
+SRCREV = "ce906add5f5f663e0f72acb10cdaf56807c73b08"
 SECTION = "x11/multimedia"
 
 S = "${WORKDIR}/git"
@@ -56,7 +56,7 @@ FILES_calaos-home = "${bindir}/calaos_home \
 	            ${systemd_unitdir}/system/calaos-home.service \
 	            ${bindir}/calaos_home.sh"
 
-FILES_calaos_tools = "${bindir}/calaos_config \
+FILES_calaos-tools = "${bindir}/calaos_config \
                 ${bindir}/wago_test \
                 "
 
