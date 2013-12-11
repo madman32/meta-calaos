@@ -8,7 +8,7 @@ PR = "r21"
 
 DEPENDS = "libsigc++-2.0 owfs log4cpp libvmime jansson lua5.1 elementary"
 
-SRCREV = "ce906add5f5f663e0f72acb10cdaf56807c73b08"
+SRCREV = "d08fa5bf73a18279388050a4bf8f1c0aada6877f"
 SECTION = "x11/multimedia"
 
 S = "${WORKDIR}/git"
@@ -34,7 +34,7 @@ do_install_append() {
 FILES_${PN}-dbg += "${srcdir}/* ${bindir}/.debug ${libdir}/calaos/widgets/*/.debug"
 FILES_${PN}-dev += "${libdir}/calaos/widgets/*/*.la"
 
-PACKAGES = "calaos-server calaos-home calaos-base calaos-base-dbg calaos-base-dev calaos-tools"
+PACKAGES = "calaos-server calaos-home calaos-base calaos-base-dbg calaos-base-dev"
 
 #Clock widget
 PACKAGES += "calaos-home-widget-clock"
@@ -47,7 +47,10 @@ FILES_calaos-home-widget-note = "${libdir}/calaos/widgets/note/module.so"
 FILES_calaos-home-widget-note += "${datadir}/calaos/widgets/note/*.edj"
 
 FILES_calaos-server = "${bindir}/calaos_server \
-                    ${systemd_unitdir}/system/calaos-server.service"
+                    ${systemd_unitdir}/system/calaos-server.service \
+                    ${bindir}/calaos_config \
+                    ${bindir}/wago_test \
+                    "
 
 FILES_calaos-home = "${bindir}/calaos_home \
                 ${bindir}/calaos_thumb \
@@ -56,13 +59,8 @@ FILES_calaos-home = "${bindir}/calaos_home \
 	            ${systemd_unitdir}/system/calaos-home.service \
 	            ${bindir}/calaos_home.sh"
 
-FILES_calaos-tools = "${bindir}/calaos_config \
-                ${bindir}/wago_test \
-                "
-
 RRECOMMENDS_${PN} += "calaos-home-widget-clock \
                       calaos-home-widget-note \
-                      calaos-tools \
                       "
 
 SYSTEMD_SERVICE = "calaos-server.service calaos-home.service"
