@@ -62,7 +62,7 @@ FILES_calaos_tools = "${bindir}/calaos_config \
 
 RRECOMMENDS_${PN} += "calaos-home-widget-clock \
                       calaos-home-widget-note \
-                      calaos-tools
+                      calaos-tools \
                       "
 
 SYSTEMD_SERVICE = "calaos-server.service calaos-home.service"
