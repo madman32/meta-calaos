@@ -1,0 +1,33 @@
+diff -ur squeezeplay.orig/src/jive_debug.c squeezeplay/src/jive_debug.c
+--- squeezeplay.orig/src/jive_debug.c	2013-10-13 10:30:26.000000000 +0200
++++ squeezeplay/src/jive_debug.c	2014-01-20 17:59:24.800437668 +0100
+@@ -97,7 +97,7 @@
+ 	hd = lua_newuserdata(L, sizeof(struct perf_hook_data));
+ 	lua_settable(L, LUA_REGISTRYINDEX);
+ 
+-	memset(hd, 0, sizeof(hd));
++	memset(hd, 0, sizeof(struct perf_hook_data));
+ 	hd->hook_threshold = (lua_tointeger(L, 1) * CLOCKS_PER_SEC) / 1000;
+ 	hd->kill_threshold = (luaL_optinteger(L, 2, 0) * CLOCKS_PER_SEC) / 1000;
+ 
+@@ -185,7 +185,7 @@
+ 	/* count object */
+ 	switch (type) {
+ 	case LUA_TNUMBER:
+-		if (lua_isinteger(L, index)) {
++		if (lua_isnumber(L, index)) {
+ 			s->integer++;
+ 		}
+ 		else {
+diff -ur squeezeplay.orig/src/ui/jive_style.c squeezeplay/src/ui/jive_style.c
+--- squeezeplay.orig/src/ui/jive_style.c	2013-10-13 10:30:26.000000000 +0200
++++ squeezeplay/src/ui/jive_style.c	2014-01-20 17:54:53.356437700 +0100
+@@ -664,7 +664,7 @@
+ 	lua_pushnil(L);
+ 	lua_call(L, 3, 1);
+ 
+-	if (lua_isinteger(L, -1)) {
++	if (lua_isnumber(L, -1)) {
+ 		int v = lua_tointeger(L, -1);
+ 		inset->left = v;
+ 		inset->top = v;

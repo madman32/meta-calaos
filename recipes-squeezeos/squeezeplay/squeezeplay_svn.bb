@@ -8,12 +8,13 @@ PV = "${DISTRO_VERSION}+svnr${SRCREV}"
 PR = "r25"
 
 DEPENDS += "libsdl libsdl-ttf libsdl-gfx libsdl-image"
-DEPENDS += "lua5.1 lua5.1-native luatolua++"
+DEPENDS += "lua5.1 lua5.1-native liblua5.1-tolua++"
 DEPENDS += "flac libmad tremor"
 
 SRC_URI = "${SQUEEZEPLAY_SCM};module=squeezeplay \
         file://jive_no_display.patch \
         file://comment_pcm_hw_params_set_periods.patch \
+        file://fix_squeezeplay_build.patch \
 	file://logconf.lua \
         file://jive.service \
         file://jive.sh"
@@ -30,12 +31,6 @@ RCONFLICTS_${PN} += "${PN}-systemd"
 SYSTEMD_SERVICE = "jive.service"
 
 EXTRA_OECONF = "--disable-portaudio --enable-fsync-workaround"
-
-EXTRA_OECONF_append_baby = " --enable-screen-rotation"
-
-# Optional close source package
-DEPENDS += "${@base_conditional('ENABLE_SPPRIVATE', 'yes', 'squeezeplay-private', '', d)}"
-EXTRA_OECONF += "${@base_conditional('ENABLE_SPPRIVATE', 'yes', '--with-spprivate', '', d)}"
 
 CFLAGS_prepend = '-DSQUEEZEPLAY_RELEASE=\\"${SQUEEZEOS_DISTRO_RELEASE}\\" -DSQUEEZEPLAY_REVISION=\\"${SQUEEZEOS_SQUEEZEPLAY_REVISION}\\"'
 
