@@ -1,0 +1,12 @@
+[Unit]
+Description=SqueezePlay application
+After=graphical.target
+
+[Service]
+ExecStart=/usr/bin/jive.sh
+RemainAfterExit=yes
+PIDFile=/var/run/jive.pid
+ConditionPathExists=/home/root/.squeezeplay
+
+[Install]
+WantedBy=graphical.target

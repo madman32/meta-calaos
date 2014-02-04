@@ -18,7 +18,6 @@ IMAGE_INSTALL += "linuxconsoletools"
 IMAGE_INSTALL += "openssl ca-certificates"
 IMAGE_INSTALL += "cpu-performance"
 IMAGE_INSTALL += "connman-wait-online"
-IMAGE_INSTALL += "pciutils"
 
 #IMAGE_INSTALL += "edje-utils elementary-tests"
 
