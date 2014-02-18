@@ -24,5 +24,6 @@ EXTRA_OECONF = " \
 
 do_install_append() {
     install -m 0755 ${WORKDIR}/lighttpd_gencert.sh ${D}${sbindir}
+    rm -fr ${D}/www/pages/index.html
 }
 
