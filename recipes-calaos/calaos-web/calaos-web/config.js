@@ -1,0 +1,1 @@
+var staticConfig = { localhost: true };

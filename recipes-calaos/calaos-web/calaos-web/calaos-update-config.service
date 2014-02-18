@@ -1,8 +1,0 @@
-
-[Unit]
-Description=Update calaos configuration
-DefaultDependencies=no
-
-[Service]
-ExecStart=/usr/bin/php /www/pages/config_update.php
-
