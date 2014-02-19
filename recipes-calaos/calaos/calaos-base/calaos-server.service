@@ -8,6 +8,7 @@ ExecStart=/usr/bin/calaos_server --config /etc/calaos --cache /home/root/.cache/
 Type=simple
 User=root
 Restart=always
+RestartSec=0
 
 [Install]
 WantedBy=multi-user.target
