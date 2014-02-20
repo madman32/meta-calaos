@@ -4,11 +4,12 @@ HOMEPAGE = "http://www.calaos.fr"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
-PR = "r24"
+DEPENDS = "libsigc++-2.0 owfs log4cpp jansson lua5.1 elementary"
 
-DEPENDS = "libsigc++-2.0 owfs log4cpp libvmime jansson lua5.1 elementary"
+PE = "1"
+PV = "2.0.0+git${SRCPV}"
 
-SRCREV = "d5190b8b7d56cb88b34eb81c8c118fffd2a790f1"
+SRCREV = "dd9a37868333bfaec321f775255a03f70f076384"
 SECTION = "x11/multimedia"
 
 S = "${WORKDIR}/git"
@@ -50,6 +51,7 @@ FILES_calaos-server = "${bindir}/calaos_server \
                     ${systemd_unitdir}/system/calaos-server.service \
                     ${bindir}/calaos_config \
                     ${bindir}/wago_test \
+                    ${bindir}/calaos_mail \
                     "
 
 FILES_calaos-home = "${bindir}/calaos_home \
