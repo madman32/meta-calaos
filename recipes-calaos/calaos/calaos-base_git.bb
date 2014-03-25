@@ -4,7 +4,7 @@ HOMEPAGE = "http://www.calaos.fr"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
-DEPENDS = "libsigc++-2.0 owfs log4cpp jansson lua5.1 elementary"
+DEPENDS = "libsigc++-2.0 owfs jansson lua5.1 elementary"
 
 PE = "1"
 PV = "2.0.0+git${SRCPV}"
