@@ -11,6 +11,7 @@ IMAGE_INSTALL += "lighttpd lighttpd-module-fastcgi lighttpd-module-compress ligh
 IMAGE_INSTALL += "calaos-server calaos-home calaos-web"
 IMAGE_INSTALL += "tzdata tzdata-europe ntp"
 IMAGE_INSTALL += "avahi-utils"
+IMAGE_INSTALL += "heyu"
 #IMAGE_INSTALL + shairport"
 #IMAGE_INSTALL += "squeezeplay-nogui"
 IMAGE_INSTALL += "nano htop procps"
