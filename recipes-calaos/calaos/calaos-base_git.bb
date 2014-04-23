@@ -62,7 +62,7 @@ FILES_calaos-home = "${bindir}/calaos_home \
 	            ${systemd_unitdir}/system/calaos-home.service \
 	            ${bindir}/calaos_home.sh"
 
-RRECOMMENDS_${PN}-home += "calaos-home-widget-clock \
+RRECOMMENDS_calaos-home += "calaos-home-widget-clock \
                       calaos-home-widget-note \
                       "
 
