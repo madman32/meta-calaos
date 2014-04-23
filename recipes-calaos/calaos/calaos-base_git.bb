@@ -9,7 +9,7 @@ DEPENDS = "libsigc++-2.0 owfs jansson lua5.1 elementary"
 PE = "1"
 PV = "2.0.0+git${SRCPV}"
 
-SRCREV = "d8b4931f80314e7186ecaf5d6b4944e0320bca6a"
+SRCREV = "a51f4e8685b3507c4975d6ab353e4c1b952ef1fa"
 SECTION = "x11/multimedia"
 
 S = "${WORKDIR}/git"
@@ -61,7 +61,7 @@ FILES_calaos-home = "${bindir}/calaos_home \
 	            ${systemd_unitdir}/system/calaos-home.service \
 	            ${bindir}/calaos_home.sh"
 
-RRECOMMENDS_${PN} += "calaos-home-widget-clock \
+RRECOMMENDS_${PN}-home += "calaos-home-widget-clock \
                       calaos-home-widget-note \
                       "
 
