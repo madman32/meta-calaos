@@ -52,6 +52,7 @@ FILES_calaos-server = "${bindir}/calaos_server \
                     ${bindir}/calaos_config \
                     ${bindir}/wago_test \
                     ${bindir}/calaos_mail \
+                    ${datadir}/calaos/debug.html \
                     "
 
 FILES_calaos-home = "${bindir}/calaos_home \
