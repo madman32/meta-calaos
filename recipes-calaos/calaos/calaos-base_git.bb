@@ -9,7 +9,8 @@ DEPENDS = "libsigc++-2.0 owfs jansson lua5.1 elementary"
 PE = "1"
 PV = "2.0.0+git${SRCPV}"
 
-SRCREV = "b3aef9a97206d15cae45f2b629dd767667d34332"
+SRCREV = "126ca16e2e8cf27c328a75ea33073498317b8324"
+
 SECTION = "x11/multimedia"
 
 S = "${WORKDIR}/git"
