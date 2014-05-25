@@ -4,23 +4,22 @@ LICENSE = "GPL"
 PV = "7.6+svnr${SRCREV}"
 PR = "r15"
 
-RDEPENDS += "perl perl-modules libcompress-raw-zlib-perl libclass-xsaccessor-perl"
-RDEPENDS += "libdbi-perl sqlite3 libdbd-sqlite-perl"
-RDEPENDS += "libdigest-sha1-perl libjson-xs-perl libhtml-parser-perl"
-RDEPENDS += "libtemplate-toolkit-perl libxml-parser-perl libyaml-syck-perl"
-RDEPENDS += "libev-perl libio-aio-perl libimage-scale-perl"
-RDEPENDS += "liblinux-inotify2-perl libaudio-scan-perl libsub-name-perl"
+RDEPENDS_${PN} += "perl perl-modules libcompress-raw-zlib-perl libclass-xsaccessor-perl"
+RDEPENDS_${PN} += "libdbi-perl sqlite3 libdbd-sqlite-perl"
+RDEPENDS_${PN} += "libdigest-sha1-perl libjson-xs-perl libhtml-parser-perl"
+RDEPENDS_${PN} += "libtemplate-toolkit-perl libxml-parser-perl libyaml-syck-perl"
+RDEPENDS_${PN} += "libev-perl libio-aio-perl libimage-scale-perl"
+RDEPENDS_${PN} += "liblinux-inotify2-perl libaudio-scan-perl libsub-name-perl"
 
 # For performance measures
-RDEPENDS += "libdevel-nytprof-perl"
+RDEPENDS_${PN} += "libdevel-nytprof-perl"
 
 # BROKEN: libencode-detect-perl
 
 SQUEEZECENTER_SVN_MODULE ?= "trunk"
 
 SRC_URI = "${SQUEEZECENTER_SCM};module=${SQUEEZECENTER_SVN_MODULE} \
-	file://squeezecenter \
-	file://custom-convert.conf"
+	file://squeezecenter"
 	
 S = "${WORKDIR}/${SQUEEZECENTER_SVN_MODULE}"
 
