@@ -15,7 +15,7 @@ SECTION = "x11/multimedia"
 
 S = "${WORKDIR}/git"
 
-SRC_URI = "git://github.com/calaos/calaos_base.git;protocol=http;branch=master \
+SRC_URI = "git://github.com/JulienMasson/calaos_base.git;protocol=http;branch=master \
            file://calaos-server.service \
            file://calaos-home.service \
            file://calaos_home.sh"
