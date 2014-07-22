@@ -3,7 +3,8 @@ Description=Calaos home automation server service
 After=network.target
 
 [Service]
-ExecStartPre=/bin/mkdir -p /home/root/.cache/calaos /etc/calaos
+ExecStartPre=/bin/mkdir -p /home/root/.cache/calaos /etc/calaos \
+/usb/bin/tunslip6  bbbb::1/64
 ExecStart=/usr/bin/calaos_server --config /etc/calaos --cache /home/root/.cache/calaos
 Type=simple
 User=root
