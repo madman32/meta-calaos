@@ -1,0 +1,5 @@
+#tunslip default configuration
+BAUDRATE=115200
+TUNDEV=tun0
+VERBOSITY=0
+ADDR=bbbb::1/64

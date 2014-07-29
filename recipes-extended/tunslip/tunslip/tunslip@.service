@@ -1,0 +1,15 @@
+[Unit]
+Description=Tool tunslip create a network interface $TUNDEV from device %i
+BindTo=dev-%i.device
+After=dev-%i.device network.target
+
+[Service]
+EnvironmentFile=/etc/default/tunslip
+ExecStartPre=/sbin/sysctl -w net.ipv6.conf.all.forwarding=1
+ExecStart=/usr/bin/tunslip6 -s /dev/%i -B $BAUDRATE -t $TUNDEV -v$VERBOSITY $ADDR
+ExecStop=/sbin/sysctl -w net.ipv6.conf.all.forwarding=0
+Restart=always
+RestartSec=0
+
+[Install]
+WantedBy=multi-user.target

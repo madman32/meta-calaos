@@ -19,6 +19,8 @@ IMAGE_INSTALL += "linuxconsoletools"
 IMAGE_INSTALL += "openssl ca-certificates"
 IMAGE_INSTALL += "cpu-performance"
 IMAGE_INSTALL += "connman-wait-online connman-client"
+IMAGE_INSTALL += "tunslip"
+IMAGE_INSTALL += "libemqtt-tools"
 
 #IMAGE_INSTALL += "edje-utils elementary-tests"
 
