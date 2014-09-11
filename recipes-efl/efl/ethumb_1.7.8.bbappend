@@ -1,0 +1,1 @@
+DEPENDS = "libexif eet-native evas ecore edje eet edbus"
