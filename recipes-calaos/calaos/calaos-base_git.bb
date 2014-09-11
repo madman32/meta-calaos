@@ -36,7 +36,7 @@ do_install_append() {
 FILES_${PN}-dbg += "${srcdir}/* ${bindir}/.debug ${libdir}/calaos/widgets/*/.debug"
 FILES_${PN}-dev += "${libdir}/calaos/widgets/*/*.la"
 
-PACKAGES = "calaos-server calaos-home calaos-base calaos-base-dbg calaos-base-dev"
+PACKAGES += "calaos-server calaos-home"
 
 #Clock widget
 PACKAGES += "calaos-home-widget-clock"

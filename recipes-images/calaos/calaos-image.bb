@@ -8,7 +8,7 @@ inherit core-image
 
 IMAGE_INSTALL += "connman"
 IMAGE_INSTALL += "lighttpd lighttpd-module-fastcgi lighttpd-module-compress lighttpd-module-alias lighttpd-module-rewrite lighttpd-module-redirect lighttpd-module-proxy"
-IMAGE_INSTALL += "calaos-server calaos-home calaos-web"
+IMAGE_INSTALL += "calaos-server calaos-home calaos-web calaos-base"
 IMAGE_INSTALL += "tzdata tzdata-europe ntp"
 IMAGE_INSTALL += "avahi-utils"
 IMAGE_INSTALL += "heyu"
