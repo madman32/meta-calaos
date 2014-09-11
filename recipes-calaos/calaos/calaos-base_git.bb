@@ -67,5 +67,5 @@ RRECOMMENDS_calaos-home += "calaos-home-widget-clock \
                       calaos-home-widget-note \
                       "
 
-SYSTEMD_SERVICE = "calaos-server.service calaos-home.service"
+SYSTEMD_SERVICE_${PN} = "calaos-server.service calaos-home.service"
 
