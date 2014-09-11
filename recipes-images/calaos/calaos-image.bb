@@ -22,5 +22,3 @@ IMAGE_INSTALL += "connman-wait-online connman-client"
 
 #IMAGE_INSTALL += "edje-utils elementary-tests"
 
-IMAGE_INSTALL_nuc += "xf86-video-nouveau mesa-driver-nouveau-vieux"
-IMAGE_INSTALL_nuc += "xf86-video-radeon  mesa-driver-radeon" 
