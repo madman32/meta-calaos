@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
 PE = "1"
 PV = "2.0+git${SRCPV}"
-SRCREV = "7fd4317ba688d1990b18ba5241c9ccb4f1a4c820"
+SRCREV = "c7cc857ecdfbce83771a5f2155908176e97f1d44"
 
 SRC_URI = "git://github.com/calaos/calaos-web-app.git;protocol=git \
            file://config.js \
