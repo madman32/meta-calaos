@@ -25,4 +25,3 @@ BAD_RECOMMENDATIONS += "busybox-syslog"
 
 # static /dev for /deV/null and /dev/console
 USE_DEVFS = "0"
-
