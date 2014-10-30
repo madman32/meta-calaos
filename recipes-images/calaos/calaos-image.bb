@@ -6,7 +6,7 @@ LICENSE = "MIT"
 
 inherit core-image
 
-IMAGE_LINGUAS = "en-en fr-fr de-de es-es hi-hi"
+IMAGE_LINGUAS = "en-us fr-fr de-de es-es hi-in"
 
 IMAGE_INSTALL += "connman"
 IMAGE_INSTALL += "lighttpd lighttpd-module-fastcgi lighttpd-module-compress lighttpd-module-alias lighttpd-module-rewrite lighttpd-module-redirect lighttpd-module-proxy"
