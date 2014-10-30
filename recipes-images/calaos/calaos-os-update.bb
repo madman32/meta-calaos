@@ -21,11 +21,7 @@ LICENSE = "MIT"
 IMAGE_FSTYPES = "${INITRAMFS_FSTYPES}"
 inherit core-image
 
-IMAGE_ROOTFS_SIZE = "8192"
-
 BAD_RECOMMENDATIONS += "busybox-syslog"
-
-INITRAMFS_IMAGE = "calaos-os-update"
 
 # static /dev for /deV/null and /dev/console
 USE_DEVFS = "0"
