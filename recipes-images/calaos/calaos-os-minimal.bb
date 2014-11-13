@@ -6,5 +6,5 @@ IMAGE_INSTALL += " \
 	kernel-modules \
 	"
 IMAGE_FEATURES += "ssh-server-dropbear splash"
-
-IMAGE_FSTYPES += "btrfs calaos-ddimg" 
+IMG_ROOTFS_TYPE = "btrfs"
+IMAGE_FSTYPES = "calaos-ddimg"  
