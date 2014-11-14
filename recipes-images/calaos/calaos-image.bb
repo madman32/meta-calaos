@@ -25,4 +25,5 @@ IMAGE_INSTALL += "setxkbmap"
 
 #IMAGE_INSTALL += "edje-utils elementary-tests"
 
-IMAGE_INSTALL += "xf86-video-vesa"
+IMAGE_INSTALL_nuc += "xf86-video-vesa"
+IMAGE_INSTALL_n450 += "xf86-video-vesa"
