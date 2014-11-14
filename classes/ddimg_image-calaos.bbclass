@@ -1,74 +1,112 @@
 inherit image_types
 
-# Set initramfs extension
-KERNEL_INITRAMFS ?= ""
-
 # This image depends on the rootfs image
 IMAGE_TYPEDEP_calaos-ddimg = "${IMG_ROOTFS_TYPE}"
 
-# Partition volume id
-VOLUME_ID ?= "CALAOS"
+# Boot partition volume id
+BOOTDD_VOLUME_ID ?= "CALAOS_${MACHINE}"
 
-# Free space of partition size [in KiB]
-FREE_SPACE ?= "20480"
+# First partition begin at sector 2048 : 2048*1024 = 2097152
+IMG_ROOTFS_ALIGNMENT = "2048"
 
-# Set alignment to 4MB [in KiB]
-IMAGE_ROOTFS_ALIGNMENT = "4096"
+# Set kernel and boot loader
+IMAGE_BOOTLOADER_raspberrypi ?= "bcm2835-bootfiles"
 
-ROOTFS_FILE_TYPE ?= "btrfs"
-ROOTFS_FILE = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.${ROOTFS_FILE_TYPE}"
-KERNEL_FILE = "${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}${KERNEL_INITRAMFS}-${MACHINE}.bin"
-IMAGE_BOOTLOADER ?= ""
-
-IMAGE_DEPENDS_calaos-ddimg = " \
+IMAGE_DEPENDS_calaos-ddimg += " \
 			parted-native \
 			mtools-native \
 			dosfstools-native \
 			virtual/kernel \
 			${IMAGE_BOOTLOADER} \
+			${@base_contains("KERNEL_IMAGETYPE", "uImage", "u-boot", "",d) \
 			"
+ROOTFS_FILE_TYPE ?= "btrfs"
+ROOTFS_FILE ?= "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.${ROOTFS_FILE_TYPE}"
+KERNEL_FILE ?= "${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}${KERNEL_INITRAMFS}-${MACHINE}.bin"
+FATPAYLOAD ?= ""
 
-CALAOS_IMG = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.calaos-ddimg"
 
-IMG_DATE_STAMP = "${@time.strftime('%Y.%m.%d',time.gmtime())}"
+#rootfs[depends] += "sunxi-board-fex:do_deploy"
+
+# SD card image name
+IMG = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.calaos-ddimg"
+
+IMAGEDATESTAMP = "${@time.strftime('%Y.%m.%d',time.gmtime())}"
+
+FATPAYLOAD_SIZE ?= "0"
 
 IMAGE_CMD_calaos-ddimg () {
 
+	ROOTFS_SIZE=`du -bksL ${ROOTFS_FILE} | awk '{print $1}'`
+	KERNEL_SIZE=`du -bksL ${KERNEL_FILE} | awk '{print $1}'`
+
+	if [ -n ${FATPAYLOAD} ] ; then
+		for entry in ${FATPAYLOAD} ; do
+		    TEMP_SIZE =`du -bksL ${WORKDIR}/${entry} | awk '{print $1}'`
+		    FATPAYLOAD_SIZE=$(5Hexpr ${FATPAYLOAD_SIZE} + ${TEMP_SIZE})
+		done
+	fi
+
+	BSPACE=$(expr ${BOOT_SPACE} + ${ROOTFS_SIZE} + ${KERNEL_SIZE} + ${FATPAYLOAD_SIZE})
+	echo $BSPACE
 	# Align partitions
-
-	ROOTFS_SIZE=`du -bks ${ROOTFS_FILE} | awk '{print $1}'`
-	KERNEL_SIZE=`du -bks ${KERNEL_FILE} | awk '{print $1}'`
-	BOOT_SPACE=$(expr ${ROOTFS_SIZE} \* 2 + ${KERNEL_SIZE} + ${FREE_SPACE})
-
-	BOOT_SPACE_ALIGNED=$(expr ${BOOT_SPACE} + ${IMAGE_ROOTFS_ALIGNMENT} - 1)
-	BOOT_SPACE_ALIGNED=$(expr ${BOOT_SPACE_ALIGNED} - ${BOOT_SPACE_ALIGNED} % ${IMAGE_ROOTFS_ALIGNMENT})
-	IMG_SIZE=$(expr ${IMAGE_ROOTFS_ALIGNMENT} + ${BOOT_SPACE_ALIGNED} + $ROOTFS_SIZE + ${IMAGE_ROOTFS_ALIGNMENT})
-	IMG_SIZE=$(expr ${IMG_SIZE} \* 2)
-
-	echo "Creating filesystem with one partition of ${IMG_SIZE} KiB"
+	BOOT_SPACE_ALIGNED=$(expr ${BSPACE} + ${IMG_ROOTFS_ALIGNMENT} - 1)
+	BOOT_SPACE_ALIGNED=$(expr ${BOOT_SPACE_ALIGNED} - ${BOOT_SPACE_ALIGNED} % ${IMG_ROOTFS_ALIGNMENT})
+	IMG_SIZE=$(expr ${IMG_ROOTFS_ALIGNMENT} + ${BOOT_SPACE_ALIGNED} + ${IMG_ROOTFS_ALIGNMENT})
 
 	# Initialize sdcard image file
-	dd if=/dev/zero of=${CALAOS_IMG} bs=1024 count=0 seek=${IMG_SIZE}
-	
-	# Create partition table
-	parted -s ${CALAOS_IMG} mklabel msdos
+	dd if=/dev/zero of=${IMG} bs=1 count=0 seek=$(expr 1024 \* ${IMG_SIZE})
 
+	# Create partition table
+	parted -s ${IMG} mklabel msdos
 	# Create boot partition and mark it as bootable
-	parted -s ${CALAOS_IMG} unit KiB mkpart primary fat32 ${IMAGE_ROOTFS_ALIGNMENT} $(expr ${IMG_SIZE} \- ${IMAGE_ROOTFS_ALIGNMENT})
-	parted -s ${CALAOS_IMG} set 1 boot on
+	parted -s ${IMG} unit KiB mkpart primary fat32 ${IMG_ROOTFS_ALIGNMENT} $(expr ${BOOT_SPACE_ALIGNED} \+ ${IMG_ROOTFS_ALIGNMENT})
+	parted -s ${IMG} set 1 boot on
+	parted ${IMG} print
 
 	# Create a vfat image with boot files
-	BOOT_BLOCKS=$(LC_ALL=C parted -s ${CALAOS_IMG} unit b print | awk '/ 1 / { print substr($4, 1, length($4 -1)) / 512 /2 }')
-	mkfs.vfat -n "${VOLUME_ID}" -S 512 -C ${WORKDIR}/calaos.img $BOOT_BLOCKS
+	BOOT_BLOCKS=$(LC_ALL=C parted -s ${IMG} unit b print | awk '/ 1 / { print substr($4, 1, length($4 -1)) / 512 /2 }')
+	mkfs.vfat -n "${BOOTDD_VOLUME_ID}" -S 512 -C ${WORKDIR}/calaos.img $BOOT_BLOCKS
 
-	# Copy Kernel
-	mcopy -i ${WORKDIR}/calaos.img -s ${KERNEL_FILE} ::kernel.img
+	case "${KERNEL_IMAGETYPE}" in
+	"uImage")
+	    mcopy -i ${WORKDIR}/calaos.img -s ${DEPLOY_DIR_IMAGE}/u-boot.img ::kernel.img
+	    mcopy -i ${WORKDIR}/calaos.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}${KERNEL_INITRAMFS}-${MACHINE}.bin ::uImage
+	    ;;
+	*)
+	    mcopy -i ${WORKDIR}/calaos.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}${KERNEL_INITRAMFS}-${MACHINE}.bin ::kernel.img
+	    ;;
+	esac
+
 	# Copy Rootfs
 	mcopy -i ${WORKDIR}/calaos.img -s ${ROOTFS_FILE} ::calaos-os-system.btrfs
 
+	# Add stamp file
 	echo "${IMAGE_NAME}-${IMAGEDATESTAMP}" > ${WORKDIR}/image-version-info
+	mcopy -i ${WORKDIR}/calaos.img -v ${WORKDIR}//image-version-info ::
+
+	case "${IMAGE_BOOTLOADER}" in
+	"bcm2835-bootfiles")
+        	mcopy -i ${WORKDIR}/calaos.img -s ${DEPLOY_DIR_IMAGE}/bcm2835-bootfiles/* ::/
+	        ;;
+	"sunxi")
+	        dd if=${DEPLOY_DIR_IMAGE}/u-boot-sunxi-with-spl.bin of=${SDIMG} bs=1024 seek=8 conv=notrunc
+	        ;;
+	"*")
+	        ;;
+	esac
+
+	if [ -n ${FATPAYLOAD} ] ; then
+		echo "Copying payload into VFAT"
+		for entry in ${FATPAYLOAD} ; do
+				# add the || true to stop aborting on vfat issues like not supporting .~lock files
+				mcopy -i ${WORKDIR}/calaos.img -s -v ${WORKDIR}/$entry :: || true
+		done
+	fi
+
 
 	# Burn Partitions
-	dd if=${WORKDIR}/calaos.img of=${CALAOS_IMG} conv=notrunc seek=1 bs=$(expr ${IMAGE_ROOTFS_ALIGNMENT} \* 1024) && sync && sync
+	dd if=${WORKDIR}/calaos.img of=${IMG} conv=notrunc seek=1 bs=$(expr ${IMG_ROOTFS_ALIGNMENT} \* 1024) && sync && sync
+
 
 }
