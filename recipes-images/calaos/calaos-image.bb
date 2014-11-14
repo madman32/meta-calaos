@@ -25,6 +25,3 @@ IMAGE_INSTALL += "setxkbmap"
 
 #IMAGE_INSTALL += "edje-utils elementary-tests"
 
-IMAGE_INSTALL_qemux86 += "vboxguestdrivers"
-IMAGE_INSTALL_qemux86-64 += "vboxguestdrivers"
-
