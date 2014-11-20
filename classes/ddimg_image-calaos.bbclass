@@ -1,4 +1,4 @@
-inherit image_types
+inherit image_types syslinux
 
 # This image depends on the rootfs image
 IMAGE_TYPEDEP_calaos-ddimg = "${IMG_ROOTFS_TYPE}"
@@ -10,7 +10,13 @@ BOOTDD_VOLUME_ID ?= "CALAOS_${MACHINE}"
 IMG_ROOTFS_ALIGNMENT = "2048"
 
 # Set kernel and boot loader
+#IMAGE_BOOTLOADER ?= "syslinux"
 IMAGE_BOOTLOADER_raspberrypi ?= "bcm2835-bootfiles"
+IMAGE_BOOTLOADER_qemux86-64 ?= "dosfstools-native:do_populate_sysroot \
+                                syslinux:do_populate_sysroot \
+                                syslinux-native:do_populate_sysroot \
+                                parted-native:do_populate_sysroot \
+                                mtools-native:do_populate_sysroot "
 
 IMAGE_DEPENDS_calaos-ddimg += " \
 			parted-native \
@@ -18,12 +24,18 @@ IMAGE_DEPENDS_calaos-ddimg += " \
 			dosfstools-native \
 			virtual/kernel \
 			${IMAGE_BOOTLOADER} \
-			${@base_contains("KERNEL_IMAGETYPE", "uImage", "u-boot", "",d) \
 			"
 ROOTFS_FILE_TYPE ?= "btrfs"
 ROOTFS_FILE ?= "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.${ROOTFS_FILE_TYPE}"
 KERNEL_FILE ?= "${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}${KERNEL_INITRAMFS}-${MACHINE}.bin"
 FATPAYLOAD ?= ""
+
+SYSLINUX_TIMEOUT ?= "10"
+SYSLINUX_ROOT ?= "root=/dev/mem"
+SYSLINUX_PROMPT ?= "0"
+SYSLINUX_TIMEOUT ?= "10"
+SYSLINUX_LABELS = "boot"
+LABELS_append = " ${SYSLINUX_LABELS} "
 
 
 #rootfs[depends] += "sunxi-board-fex:do_deploy"
@@ -47,7 +59,7 @@ IMAGE_CMD_calaos-ddimg () {
 		done
 	fi
 
-	BSPACE=$(expr ${BOOT_SPACE} + ${ROOTFS_SIZE} + ${KERNEL_SIZE} + ${FATPAYLOAD_SIZE})
+	BSPACE=$(expr ${BOOT_SPACE} + ${ROOTFS_SIZE} \* 2 + ${KERNEL_SIZE} + ${FATPAYLOAD_SIZE})
 	echo $BSPACE
 	# Align partitions
 	BOOT_SPACE_ALIGNED=$(expr ${BSPACE} + ${IMG_ROOTFS_ALIGNMENT} - 1)
@@ -85,13 +97,19 @@ IMAGE_CMD_calaos-ddimg () {
 	echo "${IMAGE_NAME}-${IMAGEDATESTAMP}" > ${WORKDIR}/image-version-info
 	mcopy -i ${WORKDIR}/calaos.img -v ${WORKDIR}//image-version-info ::
 
-	case "${IMAGE_BOOTLOADER}" in
-	"bcm2835-bootfiles")
+	case "${MACHINE}" in
+	"raspberrypi")
         	mcopy -i ${WORKDIR}/calaos.img -s ${DEPLOY_DIR_IMAGE}/bcm2835-bootfiles/* ::/
 	        ;;
 	"sunxi")
-	        dd if=${DEPLOY_DIR_IMAGE}/u-boot-sunxi-with-spl.bin of=${SDIMG} bs=1024 seek=8 conv=notrunc
+	        dd if=${DEPLOY_DIR_IMAGE}/u-boot-sunxi-with-spl.bin of=${IMG} bs=1024 seek=8 conv=notrunc
 	        ;;
+        "qemux86-64")
+		HDDDIR="${S}/hdd/boot"
+		syslinux_hddimg_populate $HDDDIR
+         	mcopy -i ${WORKDIR}/calaos.img -s $HDDDIR/* ::/
+		dd if=${STAGING_DATADIR}/syslinux/mbr.bin of=${IMG} conv=notrunc
+		;;
 	"*")
 	        ;;
 	esac
@@ -110,3 +128,10 @@ IMAGE_CMD_calaos-ddimg () {
 
 
 }
+
+python do_syslinuxcfg() {
+       bb.build.exec_func('build_syslinux_cfg', d)
+}
+
+
+addtask syslinuxcfg before do_rootfs
