@@ -6,21 +6,6 @@ while true; do
  	dbus-send --system --type=method_call --print-reply --dest=net.connman / net.connman.Manager.GetProperties | grep "ready\|online" > /dev/null
 
 	if [ $? -eq 0 ] ; then
-		(
-		cd /sys/class/net
-		for dev in * ; do
-
-                        if [ "$dev" = "lo" ] ; then continue; fi
-                        if [ "$dev" = "sit0" ] ; then continue; fi
-
-                        mac=$(sed 's/://g' < /sys/class/net/$dev/address)
-
-                        echo "Found interface: $dev with addr: $mac, Force connect."
-
-                        /usr/bin/dbus-send --system --type=method_call --print-reply --dest=net.connman /net/connman/service/ethernet_${mac}_cable net.connman.Service.Connect
-                done
-		);
-
 		exit 0
 	fi
 
