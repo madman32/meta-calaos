@@ -18,7 +18,7 @@ IMAGE_INSTALL += "nano htop procps"
 IMAGE_INSTALL += "linuxconsoletools"
 IMAGE_INSTALL += "openssl ca-certificates"
 IMAGE_INSTALL += "cpu-performance"
-IMAGE_INSTALL += "connman-wait-online connman-client"
+IMAGE_INSTALL += "connman-wait-online connman-client connman-autoconnect"
 IMAGE_INSTALL += "setxkbmap"
 
 IMAGE_INSTALL += "edje-utils elementary-tests"

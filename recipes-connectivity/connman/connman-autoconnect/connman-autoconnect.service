@@ -1,0 +1,13 @@
+[Unit]
+Description=Connman Autoconnect all interfaces
+Requisite=connman.service
+After=connman.service
+Wants=network.target
+Before=network.target network-online.target
+
+[Service]
+Restart=on-failure
+ExecStart=/usr/sbin/connman-autoconnect
+
+[Install]
+WantedBy=multi-user.target
