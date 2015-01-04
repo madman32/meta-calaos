@@ -20,6 +20,7 @@ IMAGE_INSTALL += "openssl ca-certificates"
 IMAGE_INSTALL += "cpu-performance"
 IMAGE_INSTALL += "connman-wait-online connman-client connman-autoconnect"
 IMAGE_INSTALL += "setxkbmap"
+IMAGE_INSTALL += "wget"
 
 IMAGE_INSTALL += "edje-utils elementary-tests"
 
