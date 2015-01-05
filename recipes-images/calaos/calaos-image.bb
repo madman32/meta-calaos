@@ -26,3 +26,7 @@ IMAGE_INSTALL += "edje-utils elementary-tests"
 
 XSERVER_append_nuc = "xf86-video-vesa"
 XSERVER_append_n450 = "xf86-video-vesa"
+
+#disable syslinux serial IO
+SYSLINUX_SERIAL = ""
+SYSLINUX_SERIAL_TTY = ""
