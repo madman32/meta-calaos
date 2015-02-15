@@ -21,7 +21,6 @@ if [ ! -f /mnt/boot/calaos-os-system.btrfs ]; then
 fi
 
 losetup /dev/loop0 /mnt/boot/calaos-os-system.btrfs
-btrfstune -S 1 /dev/loop0
 mkdir /mnt/calaos-os
 mount /dev/loop0 /mnt/calaos-os
 
@@ -36,8 +35,8 @@ else
     losetup /dev/loop1 /mnt/boot/calaos-os-user.btrfs
 fi
 
-# Add user partition to the main RO calaos-system partition
-btrfs device add /dev/loop1 /mnt/calaos-os -f
+# Mount calaos-os-user as home partition
+mount /dev/loop1 /mnt/calaos-os/home
 
 # Remount the whole partition in RW 
 mount -o remount,rw /mnt/calaos-os
