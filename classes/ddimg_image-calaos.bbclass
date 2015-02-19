@@ -111,6 +111,15 @@ IMAGE_CMD_calaos-ddimg () {
          	mcopy -i ${WORKDIR}/calaos.img -s $HDDDIR/* ::/
 		dd if=${STAGING_DATADIR}/syslinux/mbr.bin of=${IMG} conv=notrunc
 		;;
+	"imx6dl-riotboard")
+		
+		if [ -n "${SPL_BINARY}" ]; then		
+			dd if=${DEPLOY_DIR_IMAGE}/${SPL_BINARY} of=${IMG} conv=notrunc seek=2 bs=512
+			dd if=${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.${UBOOT_SUFFIX_SDCARD} of=${IMG} conv=notrunc seek=69 bs=1K
+		else
+			dd if=${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.${UBOOT_SUFFIX_SDCARD} of=${IMG} conv=notrunc seek=2 bs=512
+		fi
+		;;	
 	"*")
 	        ;;
 	esac
