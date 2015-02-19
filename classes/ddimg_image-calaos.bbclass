@@ -25,6 +25,7 @@ IMAGE_DEPENDS_calaos-ddimg += " \
 			virtual/kernel \
 			${IMAGE_BOOTLOADER} \
 			"
+IMAGE_COMPRESSION ?= "xz"
 ROOTFS_FILE_TYPE ?= "btrfs"
 ROOTFS_FILE ?= "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.${ROOTFS_FILE_TYPE}"
 KERNEL_FILE ?= "${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}${KERNEL_INITRAMFS}-${MACHINE}.bin"
@@ -126,6 +127,18 @@ IMAGE_CMD_calaos-ddimg () {
 	# Burn Partitions
 	dd if=${WORKDIR}/calaos.img of=${IMG} conv=notrunc seek=1 bs=$(expr ${IMG_ROOTFS_ALIGNMENT} \* 1024) && sync && sync
 
+	# Optionally apply compression
+	case "${IMAGE_COMPRESSION}" in
+	"gzip")
+		gzip -k9 "${IMG}"
+		;;
+	"bzip2")
+		bzip2 -k9 "${IMG}"
+		;;
+	"xz")
+		xz -k "${IMG}"
+		;;
+	esac
 
 }
 
