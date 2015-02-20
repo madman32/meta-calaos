@@ -22,10 +22,6 @@ SRC_URI = "git://github.com/calaos/calaos_base.git;protocol=http;branch=master \
 
 inherit autotools gettext systemd update-alternatives
 
-do_configure_prepend() {
-    autopoint || touch config.rpath
-}
-
 do_install_append() {
 	install -d ${D}${systemd_unitdir}/system
 	install -m 0644 ${WORKDIR}/calaos-server.service ${D}${systemd_unitdir}/system
