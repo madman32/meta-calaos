@@ -18,6 +18,8 @@ IMAGE_BOOTLOADER_qemux86-64 ?= "dosfstools-native:do_populate_sysroot \
                                 parted-native:do_populate_sysroot \
                                 mtools-native:do_populate_sysroot "
 
+IMAGE_BOOTLOADER_imx6dl-riotboard ?= "u-boot"                         
+
 IMAGE_DEPENDS_calaos-ddimg += " \
 			parted-native \
 			mtools-native \
@@ -81,15 +83,31 @@ IMAGE_CMD_calaos-ddimg () {
 	BOOT_BLOCKS=$(LC_ALL=C parted -s ${IMG} unit b print | awk '/ 1 / { print substr($4, 1, length($4 -1)) / 512 /2 }')
 	mkfs.vfat -n "${BOOTDD_VOLUME_ID}" -S 512 -C ${WORKDIR}/calaos.img $BOOT_BLOCKS
 
+
+	case "${MACHINE}" in
+	"imx6dl-riotboard")
+		#avoid changing uboot param...
+	    IMG_NAME=zImage
+	    ;;
+	*)
+	    IMG_NAME=kernel.img
+	    ;;
+	esac
+
+
+
 	case "${KERNEL_IMAGETYPE}" in
 	"uImage")
-	    mcopy -i ${WORKDIR}/calaos.img -s ${DEPLOY_DIR_IMAGE}/u-boot.img ::kernel.img
+	    mcopy -i ${WORKDIR}/calaos.img -s ${DEPLOY_DIR_IMAGE}/u-boot.img ::${IMG_NAME}
 	    mcopy -i ${WORKDIR}/calaos.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}${KERNEL_INITRAMFS}-${MACHINE}.bin ::uImage
 	    ;;
 	*)
-	    mcopy -i ${WORKDIR}/calaos.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}${KERNEL_INITRAMFS}-${MACHINE}.bin ::kernel.img
+	    mcopy -i ${WORKDIR}/calaos.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}${KERNEL_INITRAMFS}-${MACHINE}.bin ::${IMG_NAME}
 	    ;;
 	esac
+
+	#copy device tree 
+	mcopy -i ${WORKDIR}/calaos.img ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${MACHINE}.dtb ::${MACHINE}.dtb
 
 	# Copy Rootfs
 	mcopy -i ${WORKDIR}/calaos.img -s ${ROOTFS_FILE} ::calaos-os-system.btrfs
