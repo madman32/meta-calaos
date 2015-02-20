@@ -7,5 +7,4 @@ IMAGE_INSTALL += " \
 	"
 IMAGE_FEATURES += "ssh-server-dropbear splash"
 IMG_ROOTFS_TYPE = "btrfs"
-IMAGE_FSTYPES = "calaos-ddimg"  
-IMAGE_FSTYPES_imx6dl-riotboard = "tar.bz2 ext3 sdcard"
+IMAGE_FSTYPES = "calaos-ddimg" 
