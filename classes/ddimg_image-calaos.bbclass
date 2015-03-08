@@ -58,7 +58,7 @@ IMAGE_CMD_calaos-ddimg () {
 	if [ -n ${FATPAYLOAD} ] ; then
 		for entry in ${FATPAYLOAD} ; do
 		    TEMP_SIZE =`du -bksL ${WORKDIR}/${entry} | awk '{print $1}'`
-		    FATPAYLOAD_SIZE=$(5Hexpr ${FATPAYLOAD_SIZE} + ${TEMP_SIZE})
+		    FATPAYLOAD_SIZE=$(expr ${FATPAYLOAD_SIZE} + ${TEMP_SIZE})
 		done
 	fi
 
@@ -106,9 +106,6 @@ IMAGE_CMD_calaos-ddimg () {
 	    ;;
 	esac
 
-	#copy device tree 
-	mcopy -i ${WORKDIR}/calaos.img ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${MACHINE}.dtb ::${MACHINE}.dtb
-
 	# Copy Rootfs
 	mcopy -i ${WORKDIR}/calaos.img -s ${ROOTFS_FILE} ::calaos-os-system.btrfs
 
@@ -130,7 +127,9 @@ IMAGE_CMD_calaos-ddimg () {
 		dd if=${STAGING_DATADIR}/syslinux/mbr.bin of=${IMG} conv=notrunc
 		;;
 	"imx6dl-riotboard")
-		
+		#copy device tree 
+	        mcopy -i ${WORKDIR}/calaos.img ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${MACHINE}.dtb ::${MACHINE}.dtb
+
 		if [ -n "${SPL_BINARY}" ]; then		
 			dd if=${DEPLOY_DIR_IMAGE}/${SPL_BINARY} of=${IMG} conv=notrunc seek=2 bs=512
 			dd if=${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.${UBOOT_SUFFIX_SDCARD} of=${IMG} conv=notrunc seek=69 bs=1K
