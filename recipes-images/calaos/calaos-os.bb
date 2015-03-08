@@ -4,7 +4,7 @@ IMAGE_FEATURES += "splash package-management x11-base ssh-server-dropbear"
 
 LICENSE = "MIT"
 
-inherit core-image
+include calaos-os-minimal.bb
 
 IMAGE_LINGUAS = "en-us fr-fr de-de es-es hi-in"
 
@@ -26,7 +26,3 @@ IMAGE_INSTALL += "edje-utils elementary-tests"
 
 XSERVER_append_nuc = "xf86-video-vesa"
 XSERVER_append_n450 = "xf86-video-vesa"
-
-#disable syslinux serial IO
-SYSLINUX_SERIAL = ""
-SYSLINUX_SERIAL_TTY = ""
