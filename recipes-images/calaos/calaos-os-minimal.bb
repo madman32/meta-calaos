@@ -8,3 +8,7 @@ IMAGE_INSTALL += " \
 IMAGE_FEATURES += "ssh-server-dropbear splash"
 IMG_ROOTFS_TYPE = "btrfs"
 IMAGE_FSTYPES = "calaos-ddimg" 
+
+#disable syslinux serial IO
+SYSLINUX_SERIAL = ""
+SYSLINUX_SERIAL_TTY = ""
