@@ -3,6 +3,7 @@ include recipes-core/images/core-image-minimal.bb
 
 # Include modules in rootfs
 IMAGE_INSTALL += " \
+        calaos-version \
 	kernel-modules \
 	"
 IMAGE_FEATURES += "ssh-server-dropbear splash"
