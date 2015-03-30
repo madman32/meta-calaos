@@ -9,7 +9,7 @@ DEPENDS = "libsigc++-2.0 owfs jansson luajit elementary"
 PE = "1"
 PV = "2.99.0+git${SRCPV}"
 
-SRCREV = "969f0e5d2b9b4a26f1289b322cac8844dcfa43f5"
+SRCREV = "874de5f46ac27cefd1a73f901f8f0e8317574483"
 
 SECTION = "x11/multimedia"
 
@@ -21,7 +21,6 @@ SRC_URI = "git://github.com/calaos/calaos_base.git;protocol=http;branch=master \
            file://calaos_home.sh"
 
 inherit autotools gettext systemd update-alternatives
-
 
 do_compile_prepend() {
   cd ${S}
@@ -43,12 +42,12 @@ PACKAGES += "calaos-server calaos-home"
 
 #Clock widget
 PACKAGES += "calaos-home-widget-clock"
-FILES_calaos-home-widget-clock = "${libdir}/calaos/widgets/clock/module.so"
+FILES_calaos-home-widget-clock = "${libdir}/calaos/widgets/clock/module.so.*"
 FILES_calaos-home-widget-clock += "${datadir}/calaos/widgets/clock/*.edj"
 
 #Note widget
 PACKAGES += "calaos-home-widget-note"
-FILES_calaos-home-widget-note = "${libdir}/calaos/widgets/note/module.so"
+FILES_calaos-home-widget-note = "${libdir}/calaos/widgets/note/module.so.*"
 FILES_calaos-home-widget-note += "${datadir}/calaos/widgets/note/*.edj"
 
 FILES_calaos-server = "${bindir}/calaos_server \
@@ -60,15 +59,18 @@ FILES_calaos-server = "${bindir}/calaos_server \
                     "
 
 FILES_calaos-home = "${bindir}/calaos_home \
-                ${bindir}/calaos_thumb \
+                    ${bindir}/calaos_thumb \
 	            ${datadir}/calaos/default.edj \
 	            ${datadir}/locale/* \
 	            ${systemd_unitdir}/system/calaos-home.service \
 	            ${bindir}/calaos_home.sh"
+
+PACKAGES += "calaos-web-debug" 
+
+FILES_calaos-web-debug = "${datadir}/calaos/debug/*"
 
 RRECOMMENDS_calaos-home += "calaos-home-widget-clock \
                       calaos-home-widget-note \
                       "
 
 SYSTEMD_SERVICE_${PN} = "calaos-server.service calaos-home.service"
-
