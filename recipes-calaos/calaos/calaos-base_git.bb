@@ -4,12 +4,12 @@ HOMEPAGE = "http://www.calaos.fr"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
-DEPENDS = "libsigc++-2.0 owfs jansson luajit elementary"
+DEPENDS = "libsigc++-2.0 owfs jansson luajit elementary libusb"
 
 PE = "1"
 PV = "2.99.0+git${SRCPV}"
 
-SRCREV = "17e82c8dc284091a6cde585d43d2e75b6f6c5587"
+SRCREV = "af4ba07dd6a75fbd167d7efc9bc9defd42acf163"
 
 SECTION = "x11/multimedia"
 
@@ -49,6 +49,8 @@ FILES_calaos-home-widget-clock += "${datadir}/calaos/widgets/clock/*.edj"
 PACKAGES += "calaos-home-widget-note"
 FILES_calaos-home-widget-note = "${libdir}/calaos/widgets/note/module.so.*"
 FILES_calaos-home-widget-note += "${datadir}/calaos/widgets/note/*.edj"
+
+FILES_${PN} = ""
 
 FILES_calaos-server = "${bindir}/calaos_server \
                     ${systemd_unitdir}/system/calaos-server.service \
