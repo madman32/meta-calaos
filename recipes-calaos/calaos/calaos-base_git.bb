@@ -9,7 +9,7 @@ DEPENDS = "libsigc++-2.0 owfs jansson luajit elementary"
 PE = "1"
 PV = "2.99.0+git${SRCPV}"
 
-SRCREV = "874de5f46ac27cefd1a73f901f8f0e8317574483"
+SRCREV = "17e82c8dc284091a6cde585d43d2e75b6f6c5587"
 
 SECTION = "x11/multimedia"
 
