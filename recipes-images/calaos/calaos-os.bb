@@ -1,6 +1,6 @@
 DESCRIPTION = "Image with Calaos."
 
-IMAGE_FEATURES += "splash package-management x11-base ssh-server-dropbear"
+IMAGE_FEATURES += "package-management x11-base"
 
 LICENSE = "MIT"
 
