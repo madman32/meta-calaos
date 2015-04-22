@@ -9,7 +9,7 @@ DEPENDS = "libsigc++-2.0 owfs jansson luajit elementary libusb"
 PE = "1"
 PV = "2.99.0+git${SRCPV}"
 
-SRCREV = "af4ba07dd6a75fbd167d7efc9bc9defd42acf163"
+SRCREV = "1b95426362326a77597b3628b6fcd0f965119285"
 
 SECTION = "x11/multimedia"
 
@@ -42,12 +42,12 @@ PACKAGES += "calaos-server calaos-home"
 
 #Clock widget
 PACKAGES += "calaos-home-widget-clock"
-FILES_calaos-home-widget-clock = "${libdir}/calaos/widgets/clock/module.so.*"
+FILES_calaos-home-widget-clock = "${libdir}/calaos/widgets/clock/module.so"
 FILES_calaos-home-widget-clock += "${datadir}/calaos/widgets/clock/*.edj"
 
 #Note widget
 PACKAGES += "calaos-home-widget-note"
-FILES_calaos-home-widget-note = "${libdir}/calaos/widgets/note/module.so.*"
+FILES_calaos-home-widget-note = "${libdir}/calaos/widgets/note/module.so"
 FILES_calaos-home-widget-note += "${datadir}/calaos/widgets/note/*.edj"
 
 FILES_${PN} = ""
@@ -57,6 +57,7 @@ FILES_calaos-server = "${bindir}/calaos_server \
                     ${bindir}/calaos_config \
                     ${bindir}/wago_test \
                     ${bindir}/calaos_mail \
+                    ${bindir}/calaos_1wire \
                     ${datadir}/calaos/debug.html \
                     "
 
