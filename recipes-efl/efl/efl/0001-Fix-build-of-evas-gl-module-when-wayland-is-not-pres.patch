@@ -1,0 +1,33 @@
+From 6df70e361db679e01a2a6fee796fab8ba0be6a05 Mon Sep 17 00:00:00 2001
+From: Nicolas Aguirre <aguirre.nicolas@gmail.com>
+Date: Wed, 22 Apr 2015 08:35:32 +0200
+Subject: [PATCH] Fix build of evas gl module when wayland is not present.
+
+---
+ src/modules/evas/engines/gl_common/evas_gl_api_ext_def.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/modules/evas/engines/gl_common/evas_gl_api_ext_def.h b/src/modules/evas/engines/gl_common/evas_gl_api_ext_def.h
+index ae738cb..57ff259 100644
+--- a/src/modules/evas/engines/gl_common/evas_gl_api_ext_def.h
++++ b/src/modules/evas/engines/gl_common/evas_gl_api_ext_def.h
+@@ -1614,6 +1614,7 @@ _EVASGL_EXT_BEGIN(EGL_KHR_wait_sync)
+ 
+ _EVASGL_EXT_END()
+ 
++#if 0
+ _EVASGL_EXT_BEGIN(EGL_WL_bind_wayland_display)
+ 
+         _EVASGL_EXT_DRVNAME(EGL_WL_bind_wayland_display)
+@@ -1639,7 +1640,7 @@ _EVASGL_EXT_BEGIN(EGL_WL_bind_wayland_display)
+         _EVASGL_EXT_FUNCTION_END()
+ 
+ _EVASGL_EXT_END()
+-
++#endif
+ 
+ #if 0
+ _EVASGL_EXT_BEGIN(EGL_SEC_map_image)
+-- 
+1.9.1
+
