@@ -10,39 +10,39 @@ mount -t sysfs sysfs /sys
 mknod -m 600 /dev/loop0 b 7 0
 mknod -m 600 /dev/loop1 b 7 1
 
+root_device=$(cat /proc/cmdline)
+root_device="${root_device##*root=}"
+root_device="${root_device%% *}"
+
+#Get parent name of root device
+root_block=$(lsblk -n -o PKNAME $root_device)
+
+#Write new partitions
+echo -e "n\np\n3\n1114112\n+512M\nn\np\n4\n2162688\n\n\nw" | fdisk /dev/$root_block
+
+#Reread the partition table the parent
+#blockdev --rereadpt /dev/$root_block
+
+#Format System #2 Partition
+mkfs.btrfs /dev/${root_block}p3
+#Format User partition
+mkfs.btrfs /dev/${root_block}p4
+
+
 # mount sdcard
 mkdir -p /mnt/boot
-mount /dev/mmcblk0p1 /mnt/boot
+mkdir -p /mnt/root1
+mkdir -p /mnt/user
 
-#Mount current calaos-os-system partition
-if [ ! -f /mnt/boot/calaos-os-system.btrfs ]; then
-    echo "Unable to find calaos-os-system.btrfs, launching rescue shell ..."
-    exec /bin/sh
-fi
-
-losetup /dev/loop0 /mnt/boot/calaos-os-system.btrfs
-mkdir /mnt/calaos-os
-mount /dev/loop0 /mnt/calaos-os
-
-#Mount calaos-os-user partition
-if [ ! -f /mnt/boot/calaos-os-user.btrfs ]; then
-    # Partition doesn't exists, create a new one
-    dd if=/dev/zero of=/mnt/boot/calaos-os-user.btrfs count=1 bs=100M
-    losetup /dev/loop1 /mnt/boot/calaos-os-user.btrfs 
-    # Format with btrfs format
-    mkfs.btrfs /dev/loop1
-else
-    losetup /dev/loop1 /mnt/boot/calaos-os-user.btrfs
-fi
+echo "Root device : $root_device"
 
 # Mount calaos-os-user as home partition
-mount /dev/loop1 /mnt/calaos-os/home
-
-# Remount the whole partition in RW 
-mount -o remount,rw /mnt/calaos-os
+mount --options ro /dev/${root_block}p1 /mnt/root1/boot
+mount --options ro /dev/${root_block}p2 /mnt/root1/
+mount --options rw /dev/${root_block}p4 /mnt/root1/home
 
 # Switch root
-cd /mnt/calaos-os
+cd /mnt/root1
 exec switch_root . /sbin/init
 
 echo "Unable to switch root and boot calaos-os system, launching rescue shell ..."

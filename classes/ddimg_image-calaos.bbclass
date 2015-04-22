@@ -62,7 +62,7 @@ IMAGE_CMD_calaos-ddimg () {
 		done
 	fi
 
-	BSPACE=$(expr ${BOOT_SPACE} + ${ROOTFS_SIZE} \* 2 + ${KERNEL_SIZE} + ${FATPAYLOAD_SIZE})
+	BSPACE=$(expr ${BOOT_SPACE} + ${ROOTFS_SIZE} + ${KERNEL_SIZE} + ${FATPAYLOAD_SIZE})
 	echo $BSPACE
 	# Align partitions
 	BOOT_SPACE_ALIGNED=$(expr ${BSPACE} + ${IMG_ROOTFS_ALIGNMENT} - 1)
