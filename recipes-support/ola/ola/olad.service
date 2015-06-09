@@ -1,0 +1,14 @@
+[Unit]
+Description=Open Lightning Architecture Daemon
+After=network.target
+
+[Service]
+ExecStartPre=/bin/mkdir -p /etc/ola
+ExecStart=/usr/bin/olad --config-dir /etc/ola
+Type=simple
+User=root
+Restart=always
+RestartSec=0
+
+[Install]
+WantedBy=multi-user.target

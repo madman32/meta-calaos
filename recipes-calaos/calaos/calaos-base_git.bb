@@ -4,7 +4,7 @@ HOMEPAGE = "http://www.calaos.fr"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
-DEPENDS = "libsigc++-2.0 owfs jansson luajit elementary libusb"
+DEPENDS = "libsigc++-2.0 owfs jansson luajit elementary libusb ola"
 
 PE = "1"
 PV = "2.99.0+git${SRCPV}"
@@ -54,10 +54,8 @@ FILES_${PN} = ""
 
 FILES_calaos-server = "${bindir}/calaos_server \
                     ${systemd_unitdir}/system/calaos-server.service \
-                    ${bindir}/calaos_config \
+                    ${bindir}/calaos_* \
                     ${bindir}/wago_test \
-                    ${bindir}/calaos_mail \
-                    ${bindir}/calaos_1wire \
                     ${datadir}/calaos/debug/* \
                     "
 
