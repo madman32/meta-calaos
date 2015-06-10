@@ -60,3 +60,5 @@ FILES_${PN}-dev += "${libdir}/olad/*.la ${libdir}/olad/*.so"
 BBCLASSEXTEND = "native nativesdk"
 
 SYSTEMD_SERVICE_${PN} = "olad.service"
+#do not enable OLA daemon by default
+SYSTEMD_AUTO_ENABLE_${PN} = "disable"
