@@ -1,6 +1,3 @@
-FILESEXTRAPATHS_prepend_nuc := "${THISDIR}/${PN}:"
-FILESEXTRAPATHS_prepend_n450 := "${THISDIR}/${PN}:"
-
-PRINC_nuc := "${@int(PRINC) + 1}"
-PRINC_n450 := "${@int(PRINC) + 1}"
+FILESEXTRAPATHS_prepend_intel-corei7-64 := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS_prepend_intel-core2-32 := "${THISDIR}/${PN}:"
 
