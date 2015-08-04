@@ -56,6 +56,7 @@ FILES_calaos-server = "${bindir}/calaos_server \
                     ${systemd_unitdir}/system/calaos-server.service \
                     ${bindir}/calaos_* \
                     ${bindir}/wago_test \
+                    ${datadir}/calaos/camfail.jpg \
                     ${datadir}/calaos/debug/* \
                     "
 
