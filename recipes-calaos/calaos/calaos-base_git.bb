@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 DEPENDS = "libsigc++-2.0 owfs jansson luajit elementary libusb ola"
 
 PE = "1"
-PV = "2.99.0+git${SRCPV}"
+PV = "2.99.0+${PR}+git${SRCPV}"
 
 SRCREV = "f29ce18743b2f5123b8cd0f9b003c2413a4fe236"
 
