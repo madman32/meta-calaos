@@ -6,7 +6,7 @@ LICENSE = "GPLv2 & LGPLv2.1"
 LIC_FILES_CHKSUM = "file://LICENCE;md5=7aa5f01584d845ad733abfa9f5cad2a1"
 
 DEPENDS = "libmicrohttpd avahi libusb1 libftdi cppunit protobuf protobuf-native ola-native"
-DEPENDS_class-native = "protobuf cppunit"
+DEPENDS_class-native = "protobuf"
 
 PV = "0.9.5"
 SRCREV = "5d09e83870bfd0c1f3f12c00b50d1836e9c43828"
