@@ -1,0 +1,28 @@
+From fbce77c7c9617ec9b34915e3046a6a4d0394378f Mon Sep 17 00:00:00 2001
+From: Nicolas Aguirre <aguirre.nicolas@gmail.com>
+Date: Thu, 1 Oct 2015 08:54:47 +0200
+Subject: [PATCH] evas: Add defines for GL_COLOR_EXT, GL_DEPTH_EXT,
+ GL_STENCIL_EXT
+
+---
+ src/modules/evas/engines/gl_common/evas_gl_define.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/src/modules/evas/engines/gl_common/evas_gl_define.h b/src/modules/evas/engines/gl_common/evas_gl_define.h
+index 2b5de74..822b9c9 100644
+--- a/src/modules/evas/engines/gl_common/evas_gl_define.h
++++ b/src/modules/evas/engines/gl_common/evas_gl_define.h
+@@ -258,4 +258,10 @@
+ #define GL_MULTISAMPLE_BUFFER_BIT7_QCOM               0x80000000
+ #endif
+ 
++#ifndef GL_EXT_discard_framebuffer
++#define GL_COLOR_EXT   0x1800
++#define GL_DEPTH_EXT   0x1801
++#define GL_STENCIL_EXT 0x1802
++#endif
++
+ #endif
+-- 
+2.5.3
+

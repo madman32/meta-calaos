@@ -1,0 +1,25 @@
+From 88ca23b692b7d251af81c72d72129711c2f5edef Mon Sep 17 00:00:00 2001
+From: Nicolas Aguirre <aguirre.nicolas@gmail.com>
+Date: Wed, 27 May 2015 08:23:37 +0200
+Subject: [PATCH] Fix RPI build EGL_OPENGL_ES3_BIT_KHR is undefined
+
+---
+ src/modules/evas/engines/gl_x11/evas_engine.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/modules/evas/engines/gl_x11/evas_engine.h b/src/modules/evas/engines/gl_x11/evas_engine.h
+index 29171b0..388013a 100644
+--- a/src/modules/evas/engines/gl_x11/evas_engine.h
++++ b/src/modules/evas/engines/gl_x11/evas_engine.h
+@@ -9,6 +9,8 @@
+ 
+ #define GL_GLEXT_PROTOTYPES
+ 
++#define EGL_OPENGL_ES3_BIT_KHR 0x0040
++
+ #ifdef GL_GLES
+ # define SUPPORT_X11 1
+ # include <EGL/egl.h>
+-- 
+2.3.5
+
