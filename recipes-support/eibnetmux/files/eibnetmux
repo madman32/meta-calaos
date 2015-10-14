@@ -1,0 +1,8 @@
+#
+# Parameters to pass to eibnetmux
+#
+
+# Gateway host
+# Should be your hardware gateway on your network
+KNX_GATEWAY="127.0.0.1"
+KNX_PORT="3671"
