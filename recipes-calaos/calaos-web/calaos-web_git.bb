@@ -7,9 +7,9 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
 PE = "1"
 PV = "2.99+${PR}+git${SRCPV}"
-SRCREV = "5c60084f1f4a12c2b6b635aa4a2447b3e06a2384"
+SRCREV = "dcb3d76ce69b870b8e8011f68930b50a8f2931fb"
 
-SRC_URI = "git://github.com/calaos/calaos-web-app.git;protocol=git;branch=devs/raoulh/new_v3"
+SRC_URI = "git://github.com/calaos/calaos-web-app.git;protocol=git;branch=master"
 
 S = "${WORKDIR}/git"
 
