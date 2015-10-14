@@ -4,7 +4,7 @@ HOMEPAGE = "http://www.calaos.fr"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
-DEPENDS = "libsigc++-2.0 owfs jansson luajit elementary libusb ola"
+DEPENDS = "libsigc++-2.0 owfs jansson luajit elementary libusb ola eibnetmux"
 
 PE = "1"
 PV = "2.99.0+${PR}+git${SRCPV}"
