@@ -1,0 +1,33 @@
+--- zlogger-1.5.0-save/plugins/appender_null/Makefile.am    2009-05-22 21:07:56.000000000 +0200
++++ zlogger-1.5.0/plugins/appender_null/Makefile.am 2015-10-14 16:53:00.642911873 +0200
+@@ -19,5 +19,7 @@
+ 
+ man_MANS = 
+ 
++AM_CFLAGS = -I$(top_srcdir)
++
+ # we want these in the dist tarball
+ EXTRA_DIST = $(man_MANS)
+--- zlogger-1.5.0-save/plugins/appender_udp/Makefile.am 2009-05-22 21:08:47.000000000 +0200
++++ zlogger-1.5.0/plugins/appender_udp/Makefile.am  2015-10-14 17:00:05.509924101 +0200
+@@ -17,6 +17,8 @@
+ pkginclude_HEADERS = 
+ noinst_HEADERS = 
+ 
++AM_CFLAGS = -I$(top_srcdir)
++
+ man_MANS = 
+ 
+ # we want these in the dist tarball
+--- zlogger-1.5.0-save/plugins/format_zlog/Makefile.am  2009-05-22 21:09:03.000000000 +0200
++++ zlogger-1.5.0/plugins/format_zlog/Makefile.am   2015-10-14 17:00:21.870064184 +0200
+@@ -17,6 +17,8 @@
+ pkginclude_HEADERS = 
+ noinst_HEADERS = 
+ 
++AM_CFLAGS = -I$(top_srcdir)
++
+ man_MANS = 
+ 
+ # we want these in the dist tarball
+
