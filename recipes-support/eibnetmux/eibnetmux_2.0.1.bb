@@ -23,9 +23,11 @@ EXTRA_OECONF = " --enable-busmonitor \
 do_install_append() {
     install -d ${D}${systemd_unitdir}/system
     install -m 0644 ${WORKDIR}/eibnetmux.service ${D}${systemd_unitdir}/system
-    install -d ${D}etc/default
-    install -m 0644 ${WORKDIR}/eibnetmux ${D}etc/default
+    install -d ${D}${sysconfdir}/default
+    install -m 0644 ${WORKDIR}/eibnetmux ${D}${sysconfdir}/default
 }
+
+FILES_${PN} += "${sysconfdir}/default/eibnetmux"
 
 SYSTEMD_SERVICE_${PN} = "eibnetmux.service"
 #do not enable eibnetmux daemon by default
