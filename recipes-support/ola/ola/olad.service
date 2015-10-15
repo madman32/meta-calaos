@@ -6,7 +6,7 @@ After=network.target
 ExecStartPre=/bin/mkdir -p /etc/ola
 ExecStart=/usr/bin/olad --config-dir /etc/ola
 Type=simple
-User=root
+User=ola
 Restart=always
 RestartSec=0
 

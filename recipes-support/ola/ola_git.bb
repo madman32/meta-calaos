@@ -16,7 +16,12 @@ SRC_URI = "git://github.com/OpenLightingProject/ola.git;protocol=https \
 
 S = "${WORKDIR}/git"
 
-inherit autotools pythonnative systemd
+inherit autotools pythonnative systemd useradd
+
+#Olad does not run as root. we need to create a new user
+USERADD_PACKAGES = "${PN}"
+USERADD_PARAM_${PN} = "-r -s /bin/false ola"
+GROUPADD_PARAM_${PN} = "-r ola"
 
 export BUILD_SYS
 export HOST_SYS
