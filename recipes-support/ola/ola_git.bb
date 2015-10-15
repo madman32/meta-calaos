@@ -19,9 +19,10 @@ S = "${WORKDIR}/git"
 inherit autotools pythonnative systemd useradd
 
 #Olad does not run as root. we need to create a new user
+OLA_USER_HOME = "/etc/ola"
 USERADD_PACKAGES = "${PN}"
-USERADD_PARAM_${PN} = "-r -s /bin/false ola"
-GROUPADD_PARAM_${PN} = "-r ola"
+USERADD_PARAM_${PN} = "--system --home ${OLA_USER_HOME} --no-create-home --shell /bin/false --groups ola --gid ola ola"
+GROUPADD_PARAM_${PN} = "ola"
 
 export BUILD_SYS
 export HOST_SYS
@@ -55,10 +56,14 @@ do_install_append_class-native() {
 do_install_append() {
     install -d ${D}${systemd_unitdir}/system
     install -m 0644 ${WORKDIR}/olad.service ${D}${systemd_unitdir}/system
+
+    install -m 755 -d ${D}${OLA_USER_HOME}
+    chown ola:ola ${D}${OLA_USER_HOME}
 }
 
 FILES_${PN}-dbg += "${libdir}/*/.debug"
-FILES_${PN} += "${datadir}/olad ${libdir}/olad/*.so.*"
+FILES_${PN} += "${datadir}/olad ${libdir}/olad/*.so.* \
+                ${OLA_USER_HOME}"
 FILES_${PN}-staticdev += "${libdir}/olad/*.a"
 FILES_${PN}-dev += "${libdir}/olad/*.la ${libdir}/olad/*.so"
 
