@@ -3,8 +3,8 @@ Description=EIBnetmux Daemon
 After=network.target
 
 [Service]
-EnvironmentFile=/etc/default/eibnetmux
-ExecStart=/usr/bin/eibnetmux -s -t -e $KNX_GATEWAY:$KNX_PORT
+EnvironmentFile=-/etc/default/eibnetmux
+ExecStart=/usr/bin/eibnetmux $EIBNETMUX_ARGS
 Type=simple
 User=root
 Restart=always
