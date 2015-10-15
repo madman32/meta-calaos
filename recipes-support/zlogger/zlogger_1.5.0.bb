@@ -11,6 +11,8 @@ SRC_URI = "http://sourceforge.net/projects/${BPN}/files/${BPN}/${PV}/${BPN}-${PV
 SRC_URI[md5sum] = "c1d537d30b7a527c1d42bd70c55dc0b7"
 SRC_URI[sha256sum] = "87039573552a0af5e2d7fddfc91518526c527f37ff4eebc858a9964e9cdf4458"
 
+DEPENDS = "pth"
+
 inherit autotools pkgconfig
 
 EXTRA_OECONF = " --with-plugins \
