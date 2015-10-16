@@ -9,7 +9,7 @@ include calaos-os-minimal.bb
 IMAGE_LINGUAS = "en-us fr-fr de-de es-es hi-in"
 
 IMAGE_INSTALL += "connman"
-IMAGE_INSTALL += "lighttpd lighttpd-module-fastcgi lighttpd-module-compress lighttpd-module-alias lighttpd-module-rewrite lighttpd-module-redirect lighttpd-module-proxy"
+IMAGE_INSTALL += "haproxy"
 IMAGE_INSTALL += "calaos-server calaos-home calaos-web calaos-base"
 IMAGE_INSTALL += "tzdata tzdata-europe ntp"
 IMAGE_INSTALL += "avahi-utils"
