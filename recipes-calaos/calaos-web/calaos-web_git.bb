@@ -16,10 +16,10 @@ S = "${WORKDIR}/git"
 inherit systemd
 
 do_install() {
-    install -d ${D}/www/pages/
-    cp -a ${WORKDIR}/git/dist/* ${D}/www/pages/
+    install -d ${D}${datadir}/calaos/app
+    cp -a ${WORKDIR}/git/dist/* ${D}${datadir}/calaos/app
 }
 
-FILES_${PN} += "/www/pages"
+FILES_${PN} += "${datadir}/calaos/app"
 PACKAGE_ARCH = "all"
 
