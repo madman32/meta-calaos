@@ -1,0 +1,26 @@
+From aaa74a061de461a2eb3bd2426ef8be298d4a32f0 Mon Sep 17 00:00:00 2001
+From: Nicolas Aguirre <aguirre.nicolas@gmail.com>
+Date: Sat, 12 Dec 2015 19:22:33 +0100
+Subject: [PATCH 2/2] Add check for luajit
+
+---
+ configure.ac | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 7ff6ad0..30e3c78 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -238,7 +238,8 @@ PKG_CHECK_MODULES([LUA], [lua >= 5.1.0], requirement_lua="lua",
+    [PKG_CHECK_MODULES([LUA], [lua5.1 >= 5.1.0], requirement_lua="lua5.1",
+       [PKG_CHECK_MODULES([LUA], [lua-5.1 >= 5.1.0], requirement_lua="lua-5.1",
+          [PKG_CHECK_MODULES([LUA], [lua51 >= 5.1.0], requirement_lua="lua51",
+-            [have_lua="no"])])])])
++	    [PKG_CHECK_MODULES([LUA], [luajit >= 2.0.4], requirement_lua="luajit",
++                [have_lua="no"])])])])])
+ 
+ if test "x${have_lua}" = "xno" ; then
+    AC_MSG_CHECKING([whether lua_newstate() is in liblua])
+-- 
+2.6.1
+

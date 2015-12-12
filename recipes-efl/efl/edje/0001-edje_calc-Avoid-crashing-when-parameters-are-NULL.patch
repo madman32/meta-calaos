@@ -1,0 +1,65 @@
+From 875a06bda162e583cc7f63e509f4bfbd8ce23f07 Mon Sep 17 00:00:00 2001
+From: Baptiste DURAND <baptiste.durand@open.eurogiciel.org>
+Date: Thu, 16 Jan 2014 16:56:13 +0100
+Subject: [PATCH 1/2] edje_calc: Avoid crashing when parameters are NULL.
+
+Patch backported from Tizen repository platform/upstream/edje
+
+TIVI-2144 : Fix Segfault during popup process creation
+
+Add pointer test to allow the function call _edje_part_recalc_single_textblock
+with null args
+
+-> backport test pointer from current EFL version (1.8.4)
+
+Change-Id: Ie7d183110075f6f32936cb66203e2a16976e9aca
+Signed-off-by: Baptiste DURAND <baptiste.durand@open.eurogiciel.org>
+Signed-off-by: Eduardo Lima (Etrunko) <eduardo.lima@intel.com>
+---
+ src/lib/edje_calc.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
+
+diff --git a/src/lib/edje_calc.c b/src/lib/edje_calc.c
+index db9ab1d..c7fb716 100644
+--- a/src/lib/edje_calc.c
++++ b/src/lib/edje_calc.c
+@@ -1259,11 +1259,12 @@ _edje_part_recalc_single_textblock(FLOAT_T sc,
+                                                          &ins_r, &ins_t, &ins_b);
+                   mw = ins_l + tw + ins_r;
+                   mh = ins_t + th + ins_b;
+-                  if (chosen_desc->text.min_x)
++
++                 if (minw && chosen_desc->text.min_x)
+                     {
+                        if (mw > *minw) *minw = mw;
+                     }
+-                  if (chosen_desc->text.min_y)
++                  if (minh && chosen_desc->text.min_y)
+                     {
+                        if (mh > *minh) *minh = mh;
+                     }
+@@ -1285,15 +1286,16 @@ _edje_part_recalc_single_textblock(FLOAT_T sc,
+                                                     &ins_t, &ins_b);
+              mw = ins_l + tw + ins_r;
+              mh = ins_t + th + ins_b;
+-             if (chosen_desc->text.max_x)
++
++             if (maxw && chosen_desc->text.max_x)
+                {
+                   if (mw > *maxw) *maxw = mw;
+-                  if (*maxw < *minw) *maxw = *minw;
++                  if (minw && (*maxw < *minw)) *maxw = *minw;
+                }
+-             if (chosen_desc->text.max_y)
++             if (maxh && chosen_desc->text.max_y)
+                {
+-                  if (mh > *maxw) *maxh = mh;
+-                  if (*maxh < *minh) *maxh = *minh;
++                  if (mh > *maxh) *maxh = mh;
++                  if (minh && (*maxh < *minh)) *maxh = *minh;
+                }
+           }
+         if ((chosen_desc->text.fit_x) || (chosen_desc->text.fit_y))
+-- 
+2.6.1
+
