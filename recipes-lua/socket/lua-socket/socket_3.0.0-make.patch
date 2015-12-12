@@ -1,0 +1,59 @@
+diff -uNr luasocket-3.0-rc1_org/src/makefile luasocket-3.0-rc1/src/makefile
+--- luasocket-3.0-rc1_org/src/makefile	2013-11-29 00:12:00.082006346 +0800
++++ luasocket-3.0-rc1/src/makefile	2013-11-29 00:45:52.037961932 +0800
+@@ -213,11 +214,10 @@
+ #------
+ # Settings selected for platform
+ #
+-CC=$(CC_$(PLAT))
+-DEF=$(DEF_$(PLAT))
+-CFLAGS=$(CFLAGS_$(PLAT))
+-LDFLAGS=$(LDFLAGS_$(PLAT))
+-LD=$(LD_$(PLAT))
++#DEF=-DLUASOCKET_DEBUG
++#CFLAGS= $(LUAINC) $(DEF) -pedantic -Wall -O2 -fpic
++LDFLAGS+=`pkg-config --cflags --libs luajit`
++#LD=$(CC)
+ LUAINC= $(LUAINC_$(PLAT))
+ LUALIB= $(LUALIB_$(PLAT))
+ 
+@@ -307,21 +307,23 @@
+ 	@echo "where PLATFORM is one of these:"
+ 	@echo "   $(PLATS)"
+ 
++CFLAGS = -shared $(MYFLAGS) `pkg-config --libs --cflags luajit`
++
+ all: $(SOCKET_SO) $(MIME_SO)
+ 
+ $(SOCKET_SO): $(SOCKET_OBJS)
+-	$(LD) $(SOCKET_OBJS) $(LDFLAGS)$@
++	$(CC) $(CFLAGS) $(SOCKET_OBJS) $(LDFLAGS) -o $@
+ 
+ $(MIME_SO): $(MIME_OBJS)
+-	$(LD) $(MIME_OBJS) $(LDFLAGS)$@
++	$(CC) $(CFLAGS) $(MIME_OBJS) $(LD_FLAGS) -o $@
+ 
+ all-unix: all $(UNIX_SO) $(SERIAL_SO)
+ 
+ $(UNIX_SO): $(UNIX_OBJS)
+-	$(LD) $(UNIX_OBJS) $(LDFLAGS)$@
++	$(CC) $(CFLAGS) $(UNIX_OBJS) $(LD_FLAGS) -o $@
+ 
+ $(SERIAL_SO): $(SERIAL_OBJS)
+-	$(LD) $(SERIAL_OBJS) $(LDFLAGS)$@
++	$(CC) $(CFLAGS) $(SERIAL_OBJS) $(LD_FLAGS) -o $@
+ 
+ install: 
+ 	$(INSTALL_DIR) $(INSTALL_TOP_LDIR)
+diff -uNr luasocket-3.0-rc1_org/src/serial.c luasocket-3.0-rc1/src/serial.c
+--- luasocket-3.0-rc1_org/src/serial.c	2013-11-29 00:12:00.082006346 +0800
++++ luasocket-3.0-rc1/src/serial.c	2013-11-29 00:31:49.745980342 +0800
+@@ -66,7 +66,7 @@
+ /*-------------------------------------------------------------------------*\
+ * Initializes module
+ \*-------------------------------------------------------------------------*/
+-LUASOCKET_API int luaopen_socket_serial(lua_State *L) {
++int luaopen_socket_serial(lua_State *L) {
+     /* create classes */
+     auxiliar_newclass(L, "serial{client}", serial_methods);
+     /* create class groups */
