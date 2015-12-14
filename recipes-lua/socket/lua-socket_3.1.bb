@@ -26,7 +26,7 @@ FILES_${PN} = "${LUA_LIB_DIR}/mime/core.so \
                ${LUA_SHARE_DIR}/*.lua \
                ${LUA_SHARE_DIR}/socket/*.lua"
 
-EXTRA_OEMAKE = "MYFLAGS='${CFLAGS} -DLUAV=5.1 ${LDFLAGS}'"
+EXTRA_OEMAKE = "MYFLAGS='${CFLAGS} -DLUAV=5.1 ${LDFLAGS} -fPIC'"
 
 do_install() {
         oe_runmake install INSTALL_TOP=${D}${prefix} INSTALL_TOP_SHARE=${D}${LUA_SHARE_DIR} INSTALL_TOP_LIB=${D}${LUA_LIB_DIR}
