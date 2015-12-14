@@ -1,5 +1,5 @@
 DESCRIPTION = "Evas is the Enlightenment canvas API"
-LICENSE = "MIT BSD"
+LICENSE = "MIT & BSD"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b9b25b03d63aa496552658c7e78b11a1"
 # can also depend on valgrind, libsdl-x11, directfb
 DEPENDS = "librsvg eina eet freetype jpeg libpng tiff virtual/libx11 libxext libxrender fontconfig libfribidi giflib"

@@ -3,7 +3,7 @@ DEPENDS = "luajit eet evas ecore embryo edje-native eina libsndfile1 eio"
 DEPENDS_virtclass-native = "luajit-native evas-native ecore-native eet-native embryo-native eina-native"
 DEPENDS_virtclass-nativesdk = "evas-native ecore-native eet-native embryo-native eina-native"
 # GPLv2 because of epp in PN-utils
-LICENSE = "MIT BSD GPLv2"
+LICENSE = "MIT & BSD & GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=c18cc221a14a84b033db27794dc36df8"
 
 inherit efl
