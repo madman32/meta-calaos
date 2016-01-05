@@ -9,13 +9,13 @@ DEPENDS = "libsigc++-2.0 owfs jansson luajit elementary libusb ola eibnetmux"
 PE = "1"
 PV = "2.99.0+${PR}+git${SRCPV}"
 
-SRCREV = "372768e4bb919ac0c272b1c6bfe4829646547224"
+SRCREV = "9a858fe1415747ed80d5798fc1f4bf3e3533e839"
 
 SECTION = "x11/multimedia"
 
 S = "${WORKDIR}/git"
 
-SRC_URI = "git://github.com/calaos/calaos_base.git;protocol=http;branch=devs/raoulh/efl17 \
+SRC_URI = "git://github.com/calaos/calaos_base.git;protocol=http;branch=master \
            file://calaos-server.service \
            file://calaos-home.service \
            file://calaos_home.sh"
