@@ -6,7 +6,7 @@ HOMEPAGE = "https://github.com/diegonehab/luasocket"
 PR = "r0"
 S = "${WORKDIR}/luasocket-3.0-rc1"
 
-RDEPENDS_${PN} = "luajit"
+DEPENDS = "luajit"
 
 SRC_URI = "https://github.com/diegonehab/luasocket/archive/v3.0-rc1.zip \
            file://socket_3.0.0-make.patch"
