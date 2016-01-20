@@ -20,6 +20,8 @@ do_install() {
     cp -a ${WORKDIR}/git/dist/* ${D}${datadir}/calaos/app
 }
 
+RDEPENDS_${PN} +=" haproxy"
+
 FILES_${PN} += "${datadir}/calaos/app"
 PACKAGE_ARCH = "all"
 
