@@ -1,29 +1,22 @@
 DESCRIPTION = "EET is the Enlightenment data storage library"
-DEPENDS = "pkgconfig zlib jpeg openssl eina gnutls"
-LICENSE = "MIT & BSD"
+DEPENDS = "pkgconfig zlib jpeg openssl eina pkgconfig-native"
+LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://COPYING;md5=da947f414a2ca4323245f1abb1980953"
 
-inherit efl
+inherit autotools
 
 BBCLASSEXTEND = "native"
 
-EXTRA_OECONF = "\
-    --disable-openssl \
-    --disable-gnutls \
-    --disable-cipher \
-    --disable-signature \
-    --enable-old-eet-file-format \
-    --disable-assert \
-"
-
 PACKAGES =+ "${PN}-utils"
+
+EXTRA_OECONF += "--disable-gnutls --enable-openssl"
 
 FILES_${PN}-utils = "\
     ${bindir}/${PN} \
 "
 
 SRC_URI = "\
-    ${E_MIRROR}/${SRCNAME}-${SRCVER}.tar.gz \
+    ${E_MIRROR}/${PN}-${PV}.tar.gz \
 "
 
 SRC_URI[md5sum] = "90b4672f898779cc8d2df2b040e9cb78"
