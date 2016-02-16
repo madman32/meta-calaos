@@ -1,0 +1,1 @@
+PACKAGECONFIG = "egl gles dri gallium gallium-egl gallium-gdm"
