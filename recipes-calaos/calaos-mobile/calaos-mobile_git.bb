@@ -10,6 +10,9 @@ SRC_URI = "git://github.com/calaos/calaos_mobile.git;protocol=https;branch=devs/
 SRCREV = "41e02f0cf618654044001b5cb09df3c278f280ee"
 S = "${WORKDIR}/git/"
 
+DEPENDS = "qtdeclarative qtgraphicaleffects qtwebsockets qtquickcontrols"
+RDEPENDS_${PN} = "qtdeclarative-qmlplugins qtgraphicaleffects-qmlplugins qtquickcontrols-qmlplugins "
+
 QMAKE_PROFILES = "../git/desktop.pro"
 
 require recipes-qt/qt5/qt5.inc
@@ -18,8 +21,5 @@ do_install_append() {
     install -d ${D}${bindir}
     install -m 0755 ${B}/calaos_home ${D}${bindir}/CalaosHome
 }
-
-DEPENDS = "qtdeclarative qtgraphicaleffects qtwebsockets"
-RDEPENDS_${PN} = "qtdeclarative-qmlplugins qtgraphicaleffects-qmlplugins"
 
 
