@@ -1,1 +1,1 @@
-PACKAGECONFIG = "egl gles dri gallium gallium-egl gallium-gdm"
+PACKAGECONFIG = "egl gles dri dri3 gallium gallium-llvm x11"

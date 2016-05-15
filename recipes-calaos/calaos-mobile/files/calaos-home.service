@@ -1,0 +1,14 @@
+[Unit]
+Description=Calaos home automation touchscreen UI
+After=xserver-nodm.service
+
+[Service]
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/calaos_home_qt --config /etc/calaos --cache /home/root/.cache/calaos
+Restart=always
+RestartSec=0
+Type=simple
+User=root
+
+[Install]
+WantedBy=multi-user.target

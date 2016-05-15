@@ -3,4 +3,4 @@
 # Very simple session manager for Mini X and Calaos
 #
 
-exec matchbox-window-manager
+exec matchbox-window-manager -use_titlebar no

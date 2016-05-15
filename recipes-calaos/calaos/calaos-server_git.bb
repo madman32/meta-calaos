@@ -17,7 +17,9 @@ SECTION = "utils"
 S = "${WORKDIR}/git"
 
 SRC_URI = "git://github.com/calaos/calaos_base.git;protocol=http;branch=master \
-           file://calaos-server.service"
+           file://calaos-server.service \
+           file://calaos_migrate.sh \
+           "
 
 inherit autotools gettext systemd
 
@@ -30,16 +32,17 @@ do_compile_prepend() {
 do_install_append() {
 	install -d ${D}${systemd_unitdir}/system
 	install -m 0644 ${WORKDIR}/calaos-server.service ${D}${systemd_unitdir}/system
+
+	install -d ${D}${bindir}
+	install -m 0755 ${WORKDIR}/calaos_migrate.sh ${D}${bindir}
 }
 
 FILES_${PN} = "${bindir}/calaos_server \
                ${systemd_unitdir}/system/calaos-server.service \
                ${bindir}/calaos_* \
                ${bindir}/wago_test \
-               ${datadir}/calaos/camfail.jpg "
-
-PACKAGES += "calaos-web-debug" 
-
-FILES_calaos-web-debug = "${datadir}/calaos/debug/*"
+               ${datadir}/calaos/camfail.jpg \
+               ${datadir}/calaos/debug/* \
+               "
 
 SYSTEMD_SERVICE_${PN} = "calaos-server.service"
