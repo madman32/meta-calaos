@@ -62,9 +62,9 @@ EXTRA_OECONF = "\
 "
 
 
-SRC_URI = "\
-    ${E_MIRROR}/${PN}-${PV}.tar.gz \
-"
+SRC_URI = "${E_MIRROR}/${PN}-${PV}.tar.gz \
+           file://0001-remove-compile-host-path-error-with-X11R6-fixed-path.patch \
+           "
 
 SRC_URI[md5sum] = "5a1c3b258f42559ef6fe8e28a803a48d"
 SRC_URI[sha256sum] = "d62ffba357df4f799efe95b6429bc6cb5fe6201f74666df62fbb132057864164"

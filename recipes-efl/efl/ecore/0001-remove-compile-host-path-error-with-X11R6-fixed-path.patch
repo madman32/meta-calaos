@@ -1,0 +1,36 @@
+From aefd43e5ce58f434133456618b637b318f89d0d6 Mon Sep 17 00:00:00 2001
+From: Raoul Hecky <raoul.hecky@gmail.com>
+Date: Thu, 30 Jun 2016 14:02:32 +0000
+Subject: [PATCH] remove compile-host-path error with X11R6 fixed path
+
+---
+ configure.ac | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 8d57560..c8f5618 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1111,13 +1111,13 @@ if ! test "x$have_ecore_x_xcb" = "xyes" ; then
+   AC_PATH_XTRA
+   AC_CHECK_HEADER(X11/X.h,
+     [
+-     if test "x$want_evas_simple_x11" = "xyes"; then
++#     if test "x$want_evas_simple_x11" = "xyes"; then
+        x_libs="${x_libs} -lX11 -lXext"
+-     else
+-       x_dir=${x_dir:-/usr/X11R6}
+-       x_cflags=${x_cflags:--I${x_includes:-$x_dir/include}}
+-       x_libs="${x_libs:--L${x_libraries:-$x_dir/lib}} -lX11 -lXext"
+-     fi
++#     else
++#       x_dir=${x_dir:-/usr/X11R6}
++#       x_cflags=${x_cflags:--I${x_includes:-$x_dir/include}}
++#       x_libs="${x_libs:--L${x_libraries:-$x_dir/lib}} -lX11 -lXext"
++#     fi
+      have_ecore_x_xlib="yes"
+     ]
+   )
+-- 
+1.9.1
+
