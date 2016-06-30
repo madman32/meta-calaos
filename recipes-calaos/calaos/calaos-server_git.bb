@@ -4,13 +4,13 @@ HOMEPAGE = "http://www.calaos.fr"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
-DEPENDS += "libsigc++-2.0 owfs jansson luajit eina eet ecore libusb ola eibnetmux"
-RDEPENDS_${PN} += "heyu lua-socket"
+DEPENDS += "libsigc++-2.0 owfs jansson luajit eina eet ecore libusb ola knxd"
+RDEPENDS_${PN} += "heyu lua-socket ola knxd"
 
 PE = "1"
 PV = "2.99.0+${PR}+git${SRCPV}"
 
-SRCREV = "ff00a7591e282d4485bd42b3d6d143871d71106b"
+SRCREV = "c8cd5aacc19f6d0dfbf9c528ecd94812cb4845b1"
 
 SECTION = "utils"
 
