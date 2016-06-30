@@ -15,7 +15,7 @@ S = "${WORKDIR}/git"
 
 inherit systemd
 
-do_install() {
+fakeroot do_install() {
     install -d ${D}${datadir}/calaos/app
     cp -a ${WORKDIR}/git/dist/* ${D}${datadir}/calaos/app
 }
