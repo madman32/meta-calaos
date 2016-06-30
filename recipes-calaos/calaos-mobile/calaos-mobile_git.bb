@@ -14,8 +14,8 @@ S = "${WORKDIR}/git/"
 
 inherit systemd
 
-DEPENDS = "qtdeclarative qtgraphicaleffects qtwebsockets qtquickcontrols"
-RDEPENDS_${PN} = "qtdeclarative-qmlplugins qtgraphicaleffects-qmlplugins qtquickcontrols-qmlplugins qtbase-fonts-ttf-dejavu"
+DEPENDS = "qtdeclarative qtgraphicaleffects qtwebsockets qtquickcontrols qtsvg"
+RDEPENDS_${PN} = "qtdeclarative-qmlplugins qtgraphicaleffects-qmlplugins qtquickcontrols-qmlplugins qtbase-fonts-ttf-dejavu qtsvg-plugins"
 
 QMAKE_PROFILES = "../git/desktop.pro"
 
