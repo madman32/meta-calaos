@@ -1,4 +1,4 @@
-DESCRIPTION = "Image with Calaos."
+DESCRIPTION = "Image with Calaos Server and UI."
 
 LICENSE = "MIT"
 
