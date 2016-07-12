@@ -17,7 +17,10 @@ inherit systemd
 
 fakeroot do_install() {
     install -d ${D}${datadir}/calaos/app
-    cp -a ${WORKDIR}/git/dist/* ${D}${datadir}/calaos/app
+    ( cd ${WORKDIR}/git/dist/
+      find . -type d -exec install -d ${D}${datadir}/calaos/app/{} \;
+      find . -type f -exec install -m 0644 ${WORKDIR}/git/dist/{} ${D}${datadir}/calaos/app/{} \;
+    );
 }
 
 RDEPENDS_${PN} +=" haproxy"
