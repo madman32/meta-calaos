@@ -74,7 +74,7 @@ systemctl stop calaos-server
 systemctl stop calaos-home
 systemctl stop haproxy
 systemctl stop olad
-systemctl stop eibnetmux
+systemctl stop knxd
 
 
 echo "[*] Mounting old system"
@@ -105,7 +105,7 @@ is_service() {
 	if [ "$1" == "usb-serial-touchscreen@ttyS2.service" ]; then return 0; fi
 	if [ "$1" == "usb-serial-touchscreen@ttyS3.service" ]; then return 0; fi
 	if [ "$1" == "olad.service" ]; then return 0; fi
-	if [ "$1" == "eibnetmux.service" ]; then return 0; fi
+	if [ "$1" == "knxd.service" ]; then return 0; fi
 	return 1
 }
 
@@ -166,7 +166,6 @@ sed -i "s/^root:.*\$/$(echo $rootpw | sed -e 's/[]\/$*.^|[]/\\&/g')/g" /etc/shad
 echo "[*] Setup timezone"
 cp -P $tmpdir/etc/localtime /etc/localtime
 systemctl stop ntpd
-ntpd -gq > /dev/null
 systemctl start ntpd
 
 echo "[*] Setup locale"
