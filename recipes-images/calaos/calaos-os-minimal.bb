@@ -20,3 +20,4 @@ IMAGE_INSTALL += "wget"
 #disable syslinux serial IO
 SYSLINUX_SERIAL = ""
 SYSLINUX_SERIAL_TTY = ""
+SYSLINUX_SPLASH = "${THISDIR}/files/calaos.png"
