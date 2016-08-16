@@ -14,7 +14,7 @@ IMAGE_FEATURES += "ssh-server-dropbear splash"
 IMAGE_INSTALL += "nano htop procps"
 IMAGE_INSTALL += "openssl ca-certificates"
 IMAGE_INSTALL += "cpu-performance"
-IMAGE_INSTALL += "connman-wait-online connman-client connman-autoconnect"
+IMAGE_INSTALL += "connman-wait-online-calaos connman-client connman-autoconnect"
 IMAGE_INSTALL += "wget"
 
 #disable syslinux serial IO
