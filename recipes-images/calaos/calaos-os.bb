@@ -16,8 +16,8 @@ IMAGE_INSTALL += "lua-socket"
 IMAGE_INSTALL += "heyu"
 IMAGE_INSTALL += "linuxconsoletools"
 
-IMAGE_INSTALL_append_intel-corei7-64 = " mesa-megadriver setxkbmap"
-IMAGE_INSTALL_append_intel-core2-32 = " mesa-megadriver setxkbmap"
+IMAGE_INSTALL_append_intel-corei7-64 = " mesa-megadriver setxkbmap vboxguestdrivers"
+IMAGE_INSTALL_append_intel-core2-32 = " mesa-megadriver setxkbmap vboxguestdrivers"
 
 XSERVER_append_intel-corei7-64 = " xf86-video-vesa"
 XSERVER_append_intel-core2-32 = " xf86-video-vesa"
