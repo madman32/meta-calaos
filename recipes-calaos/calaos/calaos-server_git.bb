@@ -8,9 +8,9 @@ DEPENDS += "libsigc++-2.0 owfs jansson luajit eina eet ecore libusb ola knxd"
 RDEPENDS_${PN} += "heyu lua-socket ola knxd"
 
 PE = "1"
-PV = "2.99.0+${PR}+git${SRCPV}"
+PV = "3.0-alpha1+${PR}+git${SRCPV}"
 
-SRCREV = "1c763afb0cf95e6552aca4f30600f89bdb58d897"
+SRCREV = "359062478ecfca0e9f03a76aa4ed78913b5afcaf"
 
 SECTION = "utils"
 
