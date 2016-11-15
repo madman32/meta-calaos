@@ -9,6 +9,7 @@ IMAGE_INSTALL += " \
         calaos-version \
 	"
 IMAGE_INSTALL += "kernel-modules"
+IMAGE_INSTALL += "linux-firmware"
 IMAGE_INSTALL += "tzdata tzdata-europe ntp"
 IMAGE_INSTALL += "avahi-utils"
 IMAGE_FEATURES += "ssh-server-dropbear splash"
