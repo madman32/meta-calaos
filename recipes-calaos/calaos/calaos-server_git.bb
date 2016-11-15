@@ -10,7 +10,7 @@ RDEPENDS_${PN} += "heyu lua-socket ola knxd"
 PE = "1"
 PV = "3.0-alpha1+${PR}+git${SRCPV}"
 
-SRCREV = "359062478ecfca0e9f03a76aa4ed78913b5afcaf"
+SRCREV = "4432a2d874f56d93893e71576481acf0539703ec"
 
 SECTION = "utils"
 
