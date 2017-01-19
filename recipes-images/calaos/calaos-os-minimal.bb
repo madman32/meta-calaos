@@ -19,6 +19,8 @@ IMAGE_INSTALL += "cpu-performance"
 IMAGE_INSTALL += "connman-wait-online-calaos connman-client connman-autoconnect"
 IMAGE_INSTALL += "wget"
 IMAGE_INSTALL += "pciutils usbutils"
+#Install the real less to make systemctl display correctly colors
+IMAGE_INSTALL += "less"
 
 #disable syslinux serial IO
 SYSLINUX_SERIAL = ""

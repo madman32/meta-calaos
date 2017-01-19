@@ -9,13 +9,13 @@ LIC_FILES_CHKSUM = "file://COPYING.GPL;md5=d32239bcb673463ab874e80d47fae504"
 SRC_URI = "git://github.com/calaos/calaos_mobile.git;protocol=https;branch=master \
            file://calaos-home.service \
           "
-SRCREV = "be8681c048a047c99c3e5f0c69663628332cba8b"
+SRCREV = "82170942d2da128799055ed2a2c0297388a807f4"
 S = "${WORKDIR}/git/"
 
 inherit systemd
 
 DEPENDS = "qtdeclarative qtgraphicaleffects qtwebsockets qtquickcontrols qtsvg"
-RDEPENDS_${PN} = "qtdeclarative-qmlplugins qtgraphicaleffects-qmlplugins qtquickcontrols-qmlplugins qtbase-fonts-ttf-dejavu qtsvg-plugins"
+RDEPENDS_${PN} = "qtdeclarative-qmlplugins qtgraphicaleffects-qmlplugins qtquickcontrols-qmlplugins qtsvg-plugins"
 
 QMAKE_PROFILES = "../git/desktop.pro"
 
