@@ -8,15 +8,15 @@ DEPENDS += "libsigc++-2.0 owfs jansson luajit libusb ola knxd libuv curl"
 RDEPENDS_${PN} += "heyu lua-socket ola knxd imagemagick curl"
 
 PE = "1"
-PV = "3.0-alpha1+${PR}+git${SRCPV}"
+PV = "3.0-alpha3+${PR}+git${SRCPV}"
 
-SRCREV = "2f19291fa0fcbf856809fa86d373d7bdca81d6ba"
+SRCREV = "7cf6eefdd2b12ab74881fde3ddf7c18a7973862b"
 
 SECTION = "utils"
 
 S = "${WORKDIR}/git"
 
-SRC_URI = "git://github.com/calaos/calaos_base.git;protocol=http;branch=dev/naguirre/libuv \
+SRC_URI = "git://github.com/calaos/calaos_base.git;protocol=http;branch=master \
            file://calaos-server.service \
            file://calaos_migrate.sh \
            "
