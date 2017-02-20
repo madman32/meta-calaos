@@ -6,7 +6,12 @@ PACKAGE_INSTALL = "busybox \
 		base-passwd \
 		util-linux \
 		btrfs-tools \
+                e2fsprogs \
+                e2fsprogs-resize2fs \
 		initramfs-boot \
+                util-linux-mount \
+                util-linux-umount \
+                util-linux-fdisk \
 		${ROOTFS_BOOTSTRAP_INSTALL} \
 		"
 

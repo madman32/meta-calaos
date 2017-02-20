@@ -24,25 +24,31 @@ echo -e "n\np\n3\n1114112\n+512M\nn\np\n4\n2162688\n\n\nw" | fdisk /dev/$root_bl
 #blockdev --rereadpt /dev/$root_block
 
 #Format System #2 Partition
-mkfs.btrfs /dev/${root_block}p3
+mkfs.ext4 /dev/${root_block}p3
 #Format User partition
-mkfs.btrfs /dev/${root_block}p4
+mkfs.ext4 /dev/${root_block}p4
 
 
 # mount sdcard
-mkdir -p /mnt/boot
-mkdir -p /mnt/root1
-mkdir -p /mnt/user
+mkdir -p /rootfs
+mkdir -p /mnt/root-ro
+mkdir -p /mnt/root-rw
 
 echo "Root device : $root_device"
 
 # Mount calaos-os-user as home partition
-mount --options ro /dev/${root_block}p1 /mnt/root1/boot
-mount --options ro /dev/${root_block}p2 /mnt/root1/
-mount --options rw /dev/${root_block}p4 /mnt/root1/home
+mount --options ro /dev/${root_block}p2 /mnt/root-ro
+mount --options rw /dev/${root_block}p4 /mnt/root-rw
+
+mkdir -p /mnt/root-rw/upperdir
+mkdir -p /mnt/root-rw/workdir
+
+mount -t overlay overlay -o lowerdir=/mnt/root-ro,upperdir=/mnt/root-rw/upperdir,workdir=/mnt/root-rw/workdir /rootfs
+
+/calaos-upgrade.sh
 
 # Switch root
-cd /mnt/root1
+cd /rootfs
 exec switch_root . /sbin/init
 
 echo "Unable to switch root and boot calaos-os system, launching rescue shell ..."
