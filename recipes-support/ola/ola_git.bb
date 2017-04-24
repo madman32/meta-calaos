@@ -8,15 +8,16 @@ LIC_FILES_CHKSUM = "file://LICENCE;md5=7aa5f01584d845ad733abfa9f5cad2a1"
 DEPENDS = "libmicrohttpd avahi libusb1 libftdi cppunit protobuf protobuf-native ola-native"
 DEPENDS_class-native = "protobuf"
 
-PV = "0.9.5"
-SRCREV = "5d09e83870bfd0c1f3f12c00b50d1836e9c43828"
+PV = "0.10.3"
+SRCREV = "07f94dae3864656277563b110a08ca6dde54ebf5"
 SRC_URI = "git://github.com/OpenLightingProject/ola.git;protocol=https \
            file://olad.service \
+           file://10-ola.rules \
           "
 
 S = "${WORKDIR}/git"
 
-inherit autotools pythonnative systemd useradd
+inherit pkgconfig autotools pythonnative systemd useradd
 
 #Olad does not run as root. we need to create a new user
 OLA_USER_HOME = "/etc/ola"
@@ -31,6 +32,9 @@ export STAGING_LIBDIR
 EXTRA_OECONF = " --disable-unittests \
                  --enable-http \
                "
+EXTRA_OECONF_class-native = " --disable-unittests \
+                              --disable-http \
+                            "
 
 EXTRA_OECONF_append_class-target = " --with-ola-protoc-plugin=${STAGING_BINDIR_NATIVE}/ola_protoc_plugin "
 
@@ -59,6 +63,9 @@ do_install_append() {
 
     install -m 755 -d ${D}${OLA_USER_HOME}
     chown ola:ola ${D}${OLA_USER_HOME}
+
+    install -d ${D}${sysconfdir}/udev/rules.d
+    install -m 0644 ${WORKDIR}/10-ola.rules ${D}${sysconfdir}/udev/rules.d/10-ola.rules
 }
 
 FILES_${PN}-dbg += "${libdir}/*/.debug"

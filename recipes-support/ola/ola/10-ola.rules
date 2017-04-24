@@ -1,0 +1,17 @@
+# udev rules file for the anyma dmx device
+SUBSYSTEM=="usb|usb_device", ACTION=="add", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="05dc", GROUP="ola"
+
+# udev rules for ftdi devices
+SUBSYSTEM=="usb|usb_device", ACTION=="add", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", GROUP="ola"
+
+# spi dmx
+SUBSYSTEM=="spidev", MODE="0666"
+
+# udev rules file for the usbdmx2 dmx device
+SUBSYSTEM=="usb|usb_device", ACTION=="add", ATTRS{idVendor}=="0962", GROUP="ola"
+
+# udev rules file for the velleman dmx device
+SUBSYSTEM=="usb|usb_device", ACTION=="add", ATTRS{idVendor}=="10cf", ATTRS{idProduct}=="8062", GROUP="ola"
+
+# udev rules file for the karate-device
+KERNEL=="ttyACM?", ATTRS{product}=="DMX2USB simple", SYMLINK+="kldmx0"
