@@ -24,5 +24,12 @@ IMAGE_INSTALL += "less"
 
 #disable syslinux serial IO
 SYSLINUX_SERIAL = ""
+SYSLINUX_OPTS = ""
 SYSLINUX_SERIAL_TTY = ""
 SYSLINUX_SPLASH = "${THISDIR}/files/calaos.png"
+
+#disable serial console on intel platforms
+SERIAL_CONSOLES_intel-corei7-64 = ""
+SERIAL_CONSOLES_intel-corei2-32 = ""
+APPEND_intel-corei7-64 = " rootwait"
+APPEND_intel-corei2-32 = " rootwait"
