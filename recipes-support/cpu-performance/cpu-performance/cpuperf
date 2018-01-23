@@ -1,5 +1,8 @@
 #!/bin/sh
 
 echo "Setting CPU governor to performance"
-/bin/echo performance > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+for c in /sys/devices/system/cpu/cpu* ; do
+    test -f $c/cpufreq/scaling_governor && \
+        /bin/echo performance > $c/cpufreq/scaling_governor
+done
 
