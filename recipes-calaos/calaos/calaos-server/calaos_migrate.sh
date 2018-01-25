@@ -87,7 +87,7 @@ echo "[*] Copy calaos configuration"
 cp -R $tmpdir/etc/calaos /etc
 
 echo "[*] Copy network configuration"
-cp -R $tmpdir/var/lib/connman /var/lib/connman
+cp -R $tmpdir/var/lib/connman/* /var/lib/connman
 
 echo "[*] Copy systemd service files"
 dir=$(pwd)
