@@ -1,0 +1,302 @@
+From 5bff1ae1af1386f9e2fdf32979f8f02d6c25d973 Mon Sep 17 00:00:00 2001
+From: Raoul Hecky <raoul.hecky@gmail.com>
+Date: Fri, 26 Jan 2018 15:42:30 +0100
+Subject: [PATCH 2/2] Add code for outputing Matrix calibration to file
+
+---
+ src/calibrator/Matrix.cpp | 89 +++++++++++++++++++++++++++--------------------
+ 1 file changed, 52 insertions(+), 37 deletions(-)
+
+diff --git a/src/calibrator/Matrix.cpp b/src/calibrator/Matrix.cpp
+index d8a7d05..38bc570 100644
+--- a/src/calibrator/Matrix.cpp
++++ b/src/calibrator/Matrix.cpp
+@@ -35,9 +35,9 @@ void getTransMatrix(float *res, float w, float h, int num_blocks,
+         Matrix<float,4,3> s;
+         Matrix<float,4,3> p;
+         p << x1,y1,1, x2,y2,1, x3,y3,1, x4,y4,1;
+-        s << w/(float)num_blocks,h/(float)num_blocks,1, 
+-		w*(num_blocks-1)/(float)num_blocks,h/(float)num_blocks,1, 
+-		w/(float)num_blocks,h*(num_blocks-1)/(float)num_blocks,1, 
++        s << w/(float)num_blocks,h/(float)num_blocks,1,
++		w*(num_blocks-1)/(float)num_blocks,h/(float)num_blocks,1,
++		w/(float)num_blocks,h*(num_blocks-1)/(float)num_blocks,1,
+ 		w*(num_blocks-1)/(float)num_blocks,h*(num_blocks-1)/(float)num_blocks,1;
+         Matrix<float,3,3> tmp = (p.transpose() * p).ldlt().solve(p.transpose() * s);
+ 
+@@ -89,8 +89,8 @@ CalibratorMatrix::CalibratorMatrix(const char* const device_name0,
+ 		throw WrongCalibratorException("Matrix: Unable to connect to X server");
+ 	}
+ 	Atom float_atom = XInternAtom(display, "FLOAT", True);
+-	
+-	
++
++
+ 	// normaly, we already have the device id
+ 	if (device_id == (XID)-1) {
+ 		devInfo = xinput_find_device_info(display, device_name, False);
+@@ -100,20 +100,20 @@ CalibratorMatrix::CalibratorMatrix(const char* const device_name0,
+ 		}
+ 		device_id = devInfo->id;
+ 	}
+-	
++
+ 	dev = XOpenDevice(display, device_id);
+ 	if (!dev) {
+ 		XCloseDisplay(display);
+ 		throw WrongCalibratorException("Matrix: Unable to open device");
+ 	}
+-	
++
+ 	// XGetDeviceProperty vars
+ 	Atom            property;
+ 	Atom            act_type;
+ 	int             act_format;
+ 	unsigned long   nitems, bytes_after;
+ 	unsigned char   *data;
+-	
++
+ 	// get "Matrix Axis Calibration" property
+ 	property = xinput_parse_atom(display, "libinput Calibration Matrix");
+ 	if (XGetDeviceProperty(display, dev, property, 0, 1000, False,
+@@ -123,7 +123,7 @@ CalibratorMatrix::CalibratorMatrix(const char* const device_name0,
+ 		XCloseDevice(display, dev);
+ 		XCloseDisplay(display);
+ 		throw WrongCalibratorException("Matrix: \"libinput Calibration Matrix\" property missing, not a (valid) evdev device");
+-		
++
+ 	} else {
+ 		if (act_format != 32 || act_type != float_atom) {
+ 			XCloseDevice(display, dev);
+@@ -170,18 +170,18 @@ bool CalibratorMatrix::finish(int width, int height)
+ 	}
+ 	this->width = width;
+ 	this->height = height;
+-	
++
+ 	// new axis origin and scaling
+ 	// based on old_axys: inversion/swapping is relative to the old axis
+ 	XYinfo new_axis(old_axys);
+-	
+-	
++
++
+ 	// calculate average of clicks
+ 	float x_min = (clicked.x[UL] + clicked.x[LL])/2.0;
+ 	float x_max = (clicked.x[UR] + clicked.x[LR])/2.0;
+ 	float y_min = (clicked.y[UL] + clicked.y[UR])/2.0;
+ 	float y_max = (clicked.y[LL] + clicked.y[LR])/2.0;
+-	
++
+ 	// Should x and y be swapped?
+ 	if (abs(clicked.x[UL] - clicked.x[UR]) < abs(clicked.y[UL] - clicked.y[UR])) {
+ 		new_axis.swap_xy = !new_axis.swap_xy;
+@@ -189,12 +189,12 @@ bool CalibratorMatrix::finish(int width, int height)
+ 		std::swap(x_max, y_max);
+ 	}
+ 
+-	
++
+ 	// the screen was divided in num_blocks blocks, and the touch points were at
+ 	// one block away from the true edges of the screen.
+ 	const float block_x = width/(float)num_blocks;
+ 	const float block_y = height/(float)num_blocks;
+-	// rescale these blocks from the range of the drawn touchpoints to the range of the 
++	// rescale these blocks from the range of the drawn touchpoints to the range of the
+ 	// actually clicked coordinates, and substract/add from the clicked coordinates
+ 	// to obtain the coordinates corresponding to the edges of the screen.
+ 	float scale_x = (x_max - x_min)/(width - 2*block_x);
+@@ -203,7 +203,7 @@ bool CalibratorMatrix::finish(int width, int height)
+ 	float scale_y = (y_max - y_min)/(height - 2*block_y);
+ 	y_min -= block_y * scale_y;
+ 	y_max += block_y * scale_y;
+-	
++
+ 	// round and put in new_axis struct
+ 	new_axis.x.min = round(x_min); new_axis.x.max = round(x_max);
+ 	new_axis.y.min = round(y_min); new_axis.y.max = round(y_max);
+@@ -213,7 +213,7 @@ bool CalibratorMatrix::finish(int width, int height)
+ 		(float)clicked.x[UR], (float)clicked.y[UR],
+ 		(float)clicked.x[LL], (float)clicked.y[LL],
+ 		(float)clicked.x[LR], (float)clicked.y[LR]);
+-	
++
+ 	// finish the data, driver/calibrator specific
+ 	return finish_data(new_axis);
+ }
+@@ -225,7 +225,7 @@ bool CalibratorMatrix::finish_data(const XYinfo &new_axys)
+ 	bool not_sysfs_name = (sysfs_name == NULL);
+ 
+ 	bool success = true;
+-	
++
+ #if 0
+ 	float tm[9];
+ 	tm[1] = tm[3] = tm[6] = tm[7] = 0.0;
+@@ -240,12 +240,17 @@ bool CalibratorMatrix::finish_data(const XYinfo &new_axys)
+ 	printf("\nDoing dynamic recalibration:\n");
+ 	if (!xinput_do_set_float_prop("libinput Calibration Matrix",display, 9,tm)) {
+ 		fprintf(stderr, "Matrix: \"libinput Calibration Matrix\" failed to set the new matrix");
+-	}	
++	}
++
++    if (output_filename == NULL || not_sysfs_name)
++        printf("  copy the snippet below into '/etc/X11/xorg.conf.d/99-calibration.conf' (/usr/share/X11/xorg.conf.d/ in some distro's)\n");
++    else
++        printf("  writing xorg.conf calibration data to '%s'\n", output_filename);
+ 
+ 	printf("\t--> Making the calibration permanent <--\n");
+ 	char line[MAX_LINE_LEN];
+ 	std::string outstr;
+-	
++
+ 	outstr = "Section \"InputClass\"\n";
+ 	sprintf(line, "	Identifier	\"%s\"\n", sysfs_name);
+ 	outstr += line;
+@@ -255,11 +260,21 @@ bool CalibratorMatrix::finish_data(const XYinfo &new_axys)
+ 		tm[0],tm[1],tm[2],tm[3],tm[4],tm[5],tm[6],tm[7],tm[8]);
+ 	outstr += line;
+ 	outstr += "EndSection\n";
+-	
++
+ 	// console out
+ 	printf("%s", outstr.c_str());
+ 	if (not_sysfs_name)
+ 		printf("\nChange '%s' to your device's name in the snippet above.\n", sysfs_name);
++    else if (output_filename != NULL) {
++        FILE* fid = fopen(output_filename, "w");
++        if (fid == NULL) {
++            fprintf(stderr, "Error: Can't open '%s' for writing. Make sure you have the necessary rights\n", output_filename);
++            fprintf(stderr, "New calibration data NOT saved\n");
++            return false;
++        }
++        fprintf(fid, "%s", outstr.c_str());
++        fclose(fid);
++    }
+ 
+ 	return success;
+ }
+@@ -268,14 +283,14 @@ Atom CalibratorMatrix::xinput_parse_atom(Display *display, const char *name)
+ {
+ 	Bool is_atom = True;
+ 	int i;
+-	
++
+ 	for (i = 0; name[i] != '\0'; i++) {
+ 		if (!isdigit(name[i])) {
+ 			is_atom = False;
+ 			break;
+ 		}
+ 	}
+-	
++
+ 	if (is_atom)
+ 		return atoi(name);
+ 	else
+@@ -292,20 +307,20 @@ XDeviceInfo* CalibratorMatrix::xinput_find_device_info(
+ 	int		len = strlen(name);
+ 	Bool	is_id = True;
+ 	XID		id = (XID)-1;
+-	
++
+ 	for (loop=0; loop<len; loop++) {
+ 		if (!isdigit(name[loop])) {
+ 			is_id = False;
+ 			break;
+ 		}
+ 	}
+-	
++
+ 	if (is_id) {
+ 		id = atoi(name);
+ 	}
+-	
++
+ 	devices = XListInputDevices(display, &num_devices);
+-	
++
+ 	for (loop=0; loop<num_devices; loop++) {
+ 		if ((!only_extended || (devices[loop].use >= IsXExtensionDevice)) &&
+ 			((!is_id && strcmp(devices[loop].name, name) == 0) ||
+@@ -321,7 +336,7 @@ XDeviceInfo* CalibratorMatrix::xinput_find_device_info(
+ 			}
+ 			}
+ 	}
+-	
++
+ 	return found;
+ }
+ 
+@@ -333,10 +348,10 @@ bool CalibratorMatrix::xinput_do_set_float_prop( const char * name,
+ 	#ifndef HAVE_XI_PROP
+ 	return false;
+ 	#else
+-	
++
+ 	Atom          prop;
+ 	int           i, j;
+-	
++
+ 	Atom float_atom = XInternAtom(display, "FLOAT", True);
+ 
+ 	if (argc < 1)
+@@ -344,7 +359,7 @@ bool CalibratorMatrix::xinput_do_set_float_prop( const char * name,
+ 		fprintf(stderr, "Wrong usage of xinput_do_set_prop, need at least 1 arguments\n");
+ 		return false;
+ 	}
+-	
++
+ 	prop = xinput_parse_atom(display, name);
+ 	if (prop == None) {
+ 		fprintf(stderr, "invalid property %s\n", name);
+@@ -354,7 +369,7 @@ bool CalibratorMatrix::xinput_do_set_float_prop( const char * name,
+ 	//Xlib needs the floats long-aligned
+ 	int sz = argc * (sizeof(long) == 8? 2 : 1);
+ 	float *data = new float[sz];
+-	
++
+ 	for (i = 0, j = 0; i < argc; i++) {
+ 		data[j] = argv[i];
+ 		if (sizeof(long) == 4) j++;
+@@ -363,7 +378,7 @@ bool CalibratorMatrix::xinput_do_set_float_prop( const char * name,
+ 			j += 2;
+ 		}
+ 	}
+-	
++
+ 	XChangeDeviceProperty(display, dev, prop, float_atom, 32, PropModeReplace,
+ 			      (const unsigned char *)data, argc);
+ 	delete[] data;
+@@ -383,9 +398,9 @@ bool CalibratorMatrix::xinput_do_get_float_prop( const char * pname,
+ 	unsigned long       nitems, bytes_after;
+ 	unsigned char       *ptr, *data;
+ 	int                 j, size = 0;
+-	
++
+ 	property = xinput_parse_atom(display, pname);
+-	
++
+ 	if (XGetDeviceProperty(display, dev, property, 0, 1000, False,
+ 		AnyPropertyType, &act_type, &act_format,
+ 		&nitems, &bytes_after, &data) == Success)
+@@ -398,7 +413,7 @@ bool CalibratorMatrix::xinput_do_get_float_prop( const char * pname,
+ 			case 16: size = sizeof(short); break;
+ 			case 32: size = sizeof(long); break;
+ 		}
+-		
++
+ 		for (j = 0; j < *argc; j++)
+ 		{
+ 			argv[j] = *((float*)ptr);
+@@ -408,7 +423,7 @@ bool CalibratorMatrix::xinput_do_get_float_prop( const char * pname,
+ 		return true;
+ 	} else
+ 		return false;
+-	
++
+ }
+ 
+ 
+-- 
+2.9.3
+

@@ -23,6 +23,8 @@ SRC_URI = "git://github.com/calaos/calaos_base.git;protocol=http;branch=master \
 
 inherit pkgconfig autotools gettext systemd
 
+LDFLAGS="-ldl"
+
 do_configure_prepend() {
   (cd ${S}
   autopoint --force

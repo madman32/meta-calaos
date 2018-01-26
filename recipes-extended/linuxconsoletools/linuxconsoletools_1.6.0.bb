@@ -4,9 +4,9 @@ PRIORITY = "optional"
 PR = "r2"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
-SRC_URI[md5sum] = "9115e08e3a2193b62da46d0e02852787"
-SRC_URI[sha256sum] = "8ef1419e1a3dc31cd63cab969ef7e9c58060703fe6b755312f3a36b924f46500"
-SRC_URI = "${SOURCEFORGE_MIRROR}/linuxconsole/linuxconsoletools-1.4.6.tar.bz2 \
+SRC_URI[md5sum] = "fd52fa4a81455eb95a6c81efb087ce98"
+SRC_URI[sha256sum] = "ced2efed00b67b45f82eddc69be07385835d558f658016315ac621fe2eaa8146"
+SRC_URI = "${SOURCEFORGE_MIRROR}/linuxconsole/linuxconsoletools-1.6.0.tar.bz2 \
            file://usb-serial-touchscreen@.service \
            "
 
