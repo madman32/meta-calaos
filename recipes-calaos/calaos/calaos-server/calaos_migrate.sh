@@ -86,9 +86,6 @@ mount /dev/$cdrive $tmpdir
 echo "[*] Copy calaos configuration"
 cp -R $tmpdir/etc/calaos /etc
 
-echo "[*] Copy network configuration"
-cp -R $tmpdir/var/lib/connman/* /var/lib/connman
-
 echo "[*] Copy systemd service files"
 dir=$(pwd)
 cd $tmpdir/etc/systemd/system/multi-user.target.wants/
@@ -199,12 +196,20 @@ then
 	cp -R $tmpdir/etc/ola /etc/
 fi
 
+echo "[*] Copy network configuration"
+cp -R $tmpdir/var/lib/connman/* /var/lib/connman
+
 sync
 umount $tmpdir
+
+echo "[*] Killing network"
+killall -9 connmand
 
 echo "--------------------------"
 echo "Migration successfully done."
 echo
-echo "Please reboot now."
+echo "Rebooting now."
 echo
+
+reboot
 
