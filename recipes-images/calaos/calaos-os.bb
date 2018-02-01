@@ -20,6 +20,9 @@ IMAGE_INSTALL += "evtest xev"
 IMAGE_INSTALL += "xinput-calibrator"
 IMAGE_INSTALL += "xf86-input-tslib tslib"
 
+IMAGE_INSTALL += "screen lsof htop"
+#IMAGE_INSTALL += "gdb calaos-server-dbg"
+
 IMAGE_INSTALL_append_intel-corei7-64 = " mesa-megadriver setxkbmap"
 IMAGE_INSTALL_append_intel-core2-32 = " mesa-megadriver setxkbmap"
 

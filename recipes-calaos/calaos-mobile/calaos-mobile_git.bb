@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = "file://COPYING.GPL;md5=d32239bcb673463ab874e80d47fae504"
 SRC_URI = "git://github.com/calaos/calaos_mobile.git;protocol=https;branch=master \
            file://calaos-home.service \
           "
-SRCREV = "8574ef264b49b98a9b41244d6119a796bd470cdc"
+SRCREV = "7dc686795c9052e18f947121ce49a56719f2a91e"
 S = "${WORKDIR}/git/"
 
 inherit systemd
