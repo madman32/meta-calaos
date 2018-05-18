@@ -9,15 +9,18 @@ LIC_FILES_CHKSUM = "file://COPYING.GPL;md5=d32239bcb673463ab874e80d47fae504"
 SRC_URI = "git://github.com/calaos/calaos_mobile.git;protocol=https;branch=master \
            file://calaos-home.service \
           "
-SRCREV = "7dc686795c9052e18f947121ce49a56719f2a91e"
+SRCREV = "9420300818e606eab558dfb3559177c968d8b839"
 S = "${WORKDIR}/git/"
 
 inherit systemd
 
-DEPENDS = "qtdeclarative qtgraphicaleffects qtwebsockets qtquickcontrols qtsvg"
-RDEPENDS_${PN} = "qtdeclarative-qmlplugins qtgraphicaleffects-qmlplugins qtquickcontrols-qmlplugins qtsvg-plugins"
+DEPENDS = "qtdeclarative qtgraphicaleffects qtwebsockets qtquickcontrols qtsvg qtvirtualkeyboard"
+RDEPENDS_${PN} = "qtdeclarative-qmlplugins qtgraphicaleffects-qmlplugins qtquickcontrols-qmlplugins qtsvg-plugins \
+                  qtvirtualkeyboard qtvirtualkeyboard-dictionaries qtvirtualkeyboard-plugins qtvirtualkeyboard-qmlplugins \
+                "
 
 QMAKE_PROFILES = "../git/desktop.pro"
+EXTRA_QMAKEVARS_PRE = "CONFIG+=DISABLE_QM"
 
 require recipes-qt/qt5/qt5.inc
 

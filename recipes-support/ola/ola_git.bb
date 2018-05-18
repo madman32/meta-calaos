@@ -8,8 +8,8 @@ LIC_FILES_CHKSUM = "file://LICENCE;md5=7aa5f01584d845ad733abfa9f5cad2a1"
 DEPENDS = "libmicrohttpd avahi libusb1 libftdi cppunit protobuf protobuf-native ola-native"
 DEPENDS_class-native = "protobuf bison-native flex-native e2fsprogs-native"
 
-PV = "0.10.3"
-SRCREV = "07f94dae3864656277563b110a08ca6dde54ebf5"
+PV = "0.11.0-pre"
+SRCREV = "24153cc80ccf9398cd5cb2d9d7da574e78101987"
 SRC_URI = "git://github.com/OpenLightingProject/ola.git;protocol=https \
            file://olad.service \
            file://10-ola.rules \
@@ -17,7 +17,7 @@ SRC_URI = "git://github.com/OpenLightingProject/ola.git;protocol=https \
 
 S = "${WORKDIR}/git"
 
-inherit pkgconfig autotools pythonnative systemd useradd
+inherit pkgconfig autotools-brokensep pythonnative systemd useradd
 
 #Olad does not run as root. we need to create a new user
 OLA_USER_HOME = "/etc/ola"
@@ -55,6 +55,18 @@ do_configure_prepend() {
 do_install_append_class-native() {
     install -d ${D}${bindir}
     install -m 0755 ${B}/protoc/ola_protoc_plugin ${D}${bindir}
+
+    #fix absolute links
+    cd ${D}${bindir}
+    ln -sf ola_dev_info ola_patch
+    ln -sf ola_dev_info ola_plugin_info
+    ln -sf ola_dev_info ola_plugin_state
+    ln -sf ola_dev_info ola_set_dmx
+    ln -sf ola_dev_info ola_set_priority
+    ln -sf ola_dev_info ola_uni_info
+    ln -sf ola_dev_info ola_uni_merge
+    ln -sf ola_dev_info ola_uni_name
+    ln -sf ola_rdm_get ola_rdm_set
 }
 
 do_install_append() {
