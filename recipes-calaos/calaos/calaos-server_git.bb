@@ -10,7 +10,7 @@ RDEPENDS_${PN} += "heyu lua-socket ola knxd imagemagick curl"
 PE = "1"
 PV = "3.0-rc1+${PR}+git${SRCPV}"
 
-SRCREV = "adf6d59fbbf5a718e4cc9a71b82e98d8555563b1"
+SRCREV = "66965ed16aabcbb8a76eb6a4b2d6459bcb9ae9f9"
 
 SECTION = "utils"
 

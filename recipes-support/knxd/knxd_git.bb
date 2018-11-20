@@ -4,30 +4,29 @@ LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://${S}/LICENSE;md5=8264535c0c4e9c6c335635c4026a8022"
 
 SRC_URI = "git://github.com/knxd/knxd.git;protocol=https;branch=master \
-           file://use-pkgconfig-instead-of-pth-config.patch \
            file://knxd.service \
            file://knxd.socket \
            file://knxd.conf \
            "
 
-SRCREV = "c8a4bb3b042de1fd692a93cdb7a307546f2be359"
+SRCREV = "7193c4ab247b17e9805c247cccb7edf61f72eb39"
 S = "${WORKDIR}/git/"
 
 inherit autotools-brokensep gettext pkgconfig systemd
 
-EXTRA_OECONF = "--without-pth-test --enable-eibnetip --enable-eibnetiptunnel --enable-usb --enable-eibnetipserver --enable-systemd \
-                --enable-ft12 --enable-pei16s --enable-dummy --enable-tpuarts --enable-ncn5120 --enable-groupcache \ 
+EXTRA_OECONF = "--enable-eibnetip --enable-eibnetiptunnel --enable-usb --enable-eibnetipserver --enable-systemd \
+                --enable-ft12 --enable-dummy --enable-groupcache --enable-tpuart \
                "
 
-DEPENDS += "pthsem systemd libusb"
-RDEPENDS_${PN} = "pthsem"
+DEPENDS += "libev systemd libusb fmt"
+RDEPENDS_${PN} = "libev"
 
 do_install_append() {
     install -d ${D}${systemd_unitdir}/system
     install -m 0644 ${WORKDIR}/knxd.service ${D}${systemd_unitdir}/system
     install -m 0644 ${WORKDIR}/knxd.socket ${D}${systemd_unitdir}/system
-    install -d ${D}${sysconfdir}/default
-    install -m 0644 ${WORKDIR}/knxd.conf ${D}${sysconfdir}/default
+    install -d ${D}${sysconfdir}
+    install -m 0644 ${WORKDIR}/knxd.conf ${D}${sysconfdir}
 
     rm ${D}${sysconfdir}/knxd.conf
     rm -r ${D}${libdir}/sysusers.d
