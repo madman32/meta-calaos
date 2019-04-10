@@ -5,11 +5,11 @@ OLA can also convert DMX512 data sent using DMX over IP protocols from one forma
 LICENSE = "GPLv2 & LGPLv2.1"
 LIC_FILES_CHKSUM = "file://LICENCE;md5=7aa5f01584d845ad733abfa9f5cad2a1"
 
-DEPENDS = "libmicrohttpd avahi libusb1 libftdi cppunit protobuf protobuf-native ola-native"
+DEPENDS = "libmicrohttpd avahi libusb1 libftdi cppunit protobuf protobuf-native ola-native bison-native flex-native"
 DEPENDS_class-native = "protobuf bison-native flex-native e2fsprogs-native"
 
 PV = "0.11.0-pre"
-SRCREV = "24153cc80ccf9398cd5cb2d9d7da574e78101987"
+SRCREV = "4d1d119233349d6347fa3a9f4c0095fd2b57384e"
 SRC_URI = "git://github.com/OpenLightingProject/ola.git;protocol=https \
            file://olad.service \
            file://10-ola.rules \

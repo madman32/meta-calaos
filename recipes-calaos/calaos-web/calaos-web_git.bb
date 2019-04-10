@@ -1,7 +1,6 @@
 DESCRIPTION = "Calaos Web GUI"
 HOMEPAGE = "http://www.calaos.fr"
 
-PE = "1"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
@@ -13,9 +12,9 @@ SRC_URI = "git://github.com/calaos/calaos-web-app.git;protocol=git;branch=master
 
 S = "${WORKDIR}/git"
 
-inherit systemd
+inherit allarch
 
-fakeroot do_install() {
+do_install() {
     install -d ${D}${datadir}/calaos/app
     ( cd ${WORKDIR}/git/dist/
       find . -type d -exec install -d ${D}${datadir}/calaos/app/{} \;
@@ -26,5 +25,10 @@ fakeroot do_install() {
 RDEPENDS_${PN} +=" haproxy"
 
 FILES_${PN} += "${datadir}/calaos/app"
+
+#All arch package
 PACKAGE_ARCH = "all"
+
+#Only default package is needed, no -dev/-doc/-locale
+PACKAGES = "${PN}"
 
