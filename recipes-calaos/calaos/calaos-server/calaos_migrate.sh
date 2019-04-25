@@ -36,9 +36,9 @@ do
     drive=$(echo $line | cut -d' ' -f4)
     if [ "${drive:0:3}" == "ram" ]; then continue; fi
     if [ "${drive:0:4}" == "loop" ]; then continue; fi
-    
+
     if [ ! -b /dev/$drive ]; then continue; fi
-    
+
     set +e
     mount /dev/$drive $tmpdir > /dev/null 2>&1
     if [ $? -eq 0 ]; then
@@ -84,7 +84,8 @@ set -e
 mount /dev/$cdrive $tmpdir
 
 echo "[*] Copy calaos configuration"
-cp -R $tmpdir/etc/calaos /etc
+cp -R $tmpdir/etc/calaos /etc/
+chown -R calaos:calaos /etc/calaos
 
 echo "[*] Copy systemd service files"
 dir=$(pwd)

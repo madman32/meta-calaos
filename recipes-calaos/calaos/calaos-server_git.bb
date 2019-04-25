@@ -10,7 +10,7 @@ RDEPENDS_${PN} += "heyu lua-socket ola knxd imagemagick curl"
 PE = "1"
 PV = "3.0-rc1+${PR}+git${SRCPV}"
 
-SRCREV = "d16c9df252a44a9c622ee3ec3e669caf2cf5bcd4"
+SRCREV = "b451877ad2763f302e31cda571d485b325d7496b"
 
 SECTION = "utils"
 
@@ -21,7 +21,13 @@ SRC_URI = "git://github.com/calaos/calaos_base.git;protocol=http;branch=master \
            file://calaos_migrate.sh \
            "
 
-inherit pkgconfig autotools gettext systemd
+inherit pkgconfig autotools gettext systemd useradd
+
+#Run calaos_server as a new user
+CALAOS_USER_HOME = "/etc/calaos"
+USERADD_PACKAGES = "${PN}"
+USERADD_PARAM_${PN} = "--system --home ${CALAOS_USER_HOME} --create-home --shell /bin/false --groups calaos --gid calaos calaos"
+GROUPADD_PARAM_${PN} = "calaos"
 
 LDFLAGS="-ldl"
 

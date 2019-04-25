@@ -10,7 +10,7 @@ IMAGE_LINGUAS = "en-us fr-fr de-de es-es hi-in"
 
 IMAGE_INSTALL += "haproxy"
 IMAGE_INSTALL += "calaos-server calaos-web"
-IMAGE_INSTALL += "calaos-mobile"
+IMAGE_INSTALL += "calaos-mobile calaos-mobile-tools"
 IMAGE_INSTALL += "calaos-ddns"
 
 IMAGE_INSTALL += "lua-socket"
