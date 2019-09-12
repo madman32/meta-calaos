@@ -3,10 +3,10 @@ Description=Calaos home automation server service
 After=network.target
 
 [Service]
-ExecStartPre=/bin/mkdir -p /etc/calaos/.cache/calaos
-ExecStart=/usr/bin/calaos_server --config /etc/calaos --cache /etc/calaos/.cache/calaos
+ExecStartPre=/bin/mkdir -p /home/root/.cache/calaos /etc/calaos
+ExecStart=/usr/bin/calaos_server --config /etc/calaos --cache /home/root/.cache/calaos
 Type=simple
-User=calaos
+User=root
 Restart=always
 RestartSec=0
 

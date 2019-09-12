@@ -4,11 +4,11 @@ After=xserver-nodm.service
 
 [Service]
 Environment=DISPLAY=:0
-ExecStart=/usr/bin/calaos_home_qt --config /etc/calaos --cache /etc/calaos/.cache/calaos
+ExecStart=/usr/bin/calaos_home_qt --config /etc/calaos --cache /home/root/.cache/calaos
 Restart=always
 RestartSec=0
 Type=simple
-User=calaos
+User=root
 
 [Install]
 WantedBy=multi-user.target

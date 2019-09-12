@@ -21,13 +21,7 @@ SRC_URI = "git://github.com/calaos/calaos_base.git;protocol=http;branch=master \
            file://calaos_migrate.sh \
            "
 
-inherit pkgconfig autotools gettext systemd useradd
-
-#Run calaos_server as a new user
-CALAOS_USER_HOME = "/etc/calaos"
-USERADD_PACKAGES = "${PN}"
-USERADD_PARAM_${PN} = "--system --home ${CALAOS_USER_HOME} --create-home --shell /bin/false --groups calaos --gid calaos calaos"
-GROUPADD_PARAM_${PN} = "calaos"
+inherit pkgconfig autotools gettext systemd
 
 LDFLAGS="-ldl"
 

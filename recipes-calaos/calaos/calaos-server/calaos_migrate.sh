@@ -85,7 +85,6 @@ mount /dev/$cdrive $tmpdir
 
 echo "[*] Copy calaos configuration"
 cp -R $tmpdir/etc/calaos /etc/
-chown -R calaos:calaos /etc/calaos
 
 echo "[*] Copy systemd service files"
 dir=$(pwd)
