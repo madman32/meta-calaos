@@ -9,8 +9,7 @@ INHIBIT_PACKAGE_DEBUG_SPLIT  = "1"
 
 do_install () {
 	install -m 0755 -d ${D}${libdir}/plugins/ppapi
-	install -m 0755 ${S}/../opt/google/chrome/libwidevinecdmadapter.so ${D}${libdir}/plugins/ppapi
-	install -m 0755 ${S}/../opt/google/chrome/libwidevinecdm.so ${D}${libdir}/plugins/ppapi
+	install -m 0755 ${S}/../slimjet/libwidevinecdm.so ${D}${libdir}/plugins/ppapi
 }
 
 FILES_${PN} = "${libdir}/plugins/ppapi"
