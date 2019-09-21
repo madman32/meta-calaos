@@ -202,6 +202,7 @@ fi
 
 echo "[*] Copy network configuration"
 cp -R $tmpdir/var/lib/connman/* /var/lib/connman
+cp -R $tmpdir/etc/systemd/network/* /etc/systemd/network/
 
 sync
 umount $tmpdir
