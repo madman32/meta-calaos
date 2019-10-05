@@ -4,4 +4,4 @@ Description=Service that update Calaos Dynamic DNS periodically
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/calaos_ddns update
-
+Environment="HOME=/home/root"
