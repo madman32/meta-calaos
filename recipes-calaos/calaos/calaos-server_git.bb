@@ -4,13 +4,13 @@ HOMEPAGE = "http://www.calaos.fr"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
-DEPENDS += "libsigc++-2.0 owfs jansson luajit libusb ola knxd libuv curl sqlite3"
+DEPENDS += "libsigc++-2.0 owfs jansson luajit libusb ola knxd libuv curl sqlite3 mosquitto"
 RDEPENDS_${PN} += "heyu lua-socket ola knxd imagemagick curl"
 
 PE = "1"
 PV = "3.0-rc2+${PR}+git${SRCPV}"
 
-SRCREV = "7fb596bee092274c0f0fac7ac1b7c82b720c2533"
+SRCREV = "271f55660bce21bc0971e5cd958b9f5c9a23d77e"
 
 SECTION = "utils"
 
