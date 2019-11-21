@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sed -r -i "s/  port: \/dev\/[a-zA-Z0-9]+/  port: \/dev\/$1/g" /usr/lib/node_modules/zigbee2mqtt/data/configuration.yaml

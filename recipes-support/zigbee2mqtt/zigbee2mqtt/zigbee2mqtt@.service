@@ -1,0 +1,15 @@
+[Unit]
+Description=Zigbee to MQTT bridge
+BindTo=dev-%i.target
+After=dev-%i.device
+
+[Service]
+WorkingDirectory=/usr/lib/node_modules/zigbee2mqtt
+ExecStartPre=/usr/bin/zigbee2mqtt_confport %I
+ExecStart=/usr/bin/npm start
+Type=simple
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
