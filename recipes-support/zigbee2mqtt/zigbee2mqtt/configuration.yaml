@@ -16,6 +16,8 @@ serial:
   # Location of CC2531 USB sniffer
   port: /dev/ttyACM0
 
+homeassistant: false
+
 advanced:
   # Optional: ZigBee channel, changing requires re-pairing of all devices. (Note: use a ZLL channel: 11, 15, 20, or 25 to avoid Problems)
   # (default: 11)
