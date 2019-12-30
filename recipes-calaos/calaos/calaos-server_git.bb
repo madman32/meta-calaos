@@ -8,9 +8,9 @@ DEPENDS += "libsigc++-2.0 owfs jansson luajit libusb ola knxd libuv curl sqlite3
 RDEPENDS_${PN} += "heyu lua-socket ola knxd imagemagick curl mosquitto mosquitto-clients zigbee2mqtt"
 
 PE = "1"
-PV = "3.0-rc2+${PR}+git${SRCPV}"
+PV = "3.1-rc1+${PR}+git${SRCPV}"
 
-SRCREV = "271f55660bce21bc0971e5cd958b9f5c9a23d77e"
+SRCREV = "0bb72ab0fd2fabb59cdb97591abe7364605b73e1"
 
 SECTION = "utils"
 
