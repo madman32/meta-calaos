@@ -70,12 +70,7 @@ case "$choice" in
 esac
 
 #stop running services before changing config files
-systemctl stop calaos-server
-systemctl stop calaos-home
-systemctl stop haproxy
-systemctl stop olad
-systemctl stop knxd
-
+systemctl stop calaos-server calaos-home haproxy olad knxd influxdb grafana
 
 echo "[*] Mounting old system"
 set +e
@@ -85,24 +80,26 @@ mount /dev/$cdrive $tmpdir
 
 echo "[*] Copy calaos configuration"
 cp -R $tmpdir/etc/calaos /etc/
+if [ -e $tmpdir/home/root/.cache/calaos ]
+then
+    cp -R $tmpdir/home/root/.cache/calaos /home/root/.cache/
+fi
 
 echo "[*] Copy systemd service files"
 dir=$(pwd)
 cd $tmpdir/etc/systemd/system/multi-user.target.wants/
 
+beginswith() { case $2 in "$1"*) true;; *) false;; esac; }
+
 is_service() {
     if [ "$1" == "calaos-home.service" ]; then return 0; fi
     if [ "$1" == "calaos-server.service" ]; then return 0; fi
-    if [ "$1" == "usb-serial-touchscreen@ttyUSB0.service" ]; then return 0; fi
-    if [ "$1" == "usb-serial-touchscreen@ttyUSB1.service" ]; then return 0; fi
-    if [ "$1" == "usb-serial-touchscreen@ttyUSB2.service" ]; then return 0; fi
-    if [ "$1" == "usb-serial-touchscreen@ttyUSB3.service" ]; then return 0; fi
-    if [ "$1" == "usb-serial-touchscreen@ttyS0.service" ]; then return 0; fi
-    if [ "$1" == "usb-serial-touchscreen@ttyS1.service" ]; then return 0; fi
-    if [ "$1" == "usb-serial-touchscreen@ttyS2.service" ]; then return 0; fi
-    if [ "$1" == "usb-serial-touchscreen@ttyS3.service" ]; then return 0; fi
+    if beginswith usb-serial-touchscreen $1; then return 0; fi
     if [ "$1" == "olad.service" ]; then return 0; fi
     if [ "$1" == "knxd.service" ]; then return 0; fi
+    if [ "$1" == "influxdb.service" ]; then return 0; fi
+    if [ "$1" == "grafana.service" ]; then return 0; fi
+    if beginswith zigbee2mqtt $1; then return 0; fi
     return 1
 }
 
@@ -201,8 +198,48 @@ then
 fi
 
 echo "[*] Copy network configuration"
-cp -R $tmpdir/var/lib/connman/* /var/lib/connman
-cp -R $tmpdir/etc/systemd/network/* /etc/systemd/network/
+if [ "$(ls -A $tmpdir/var/lib/connman)" ]
+then
+    cp -R $tmpdir/var/lib/connman/* /var/lib/connman
+fi
+if [ "$(ls -A $tmpdir/etc/systemd/network)" ]
+then
+    cp -R $tmpdir/etc/systemd/network/* /etc/systemd/network/
+fi
+
+echo "[*] Copy knxd.conf"
+if [ -e $tmpdir/etc/knxd.conf ]
+then
+    cp $tmpdir/etc/knxd.conf /etc/knxd.conf
+fi
+
+echo "[*] Copy zigbee2mqtt config"
+if [ -e $tmpdir/etc/zigbee2mqtt/configuration.yaml ]
+then
+    cp $tmpdir/usr/lib/node_modules/zigbee2mqtt/data/configuration.yaml /usr/lib/node_modules/zigbee2mqtt/data/configuration.yaml
+    cp $tmpdir/usr/lib/node_modules/zigbee2mqtt/data/database.db /usr/lib/node_modules/zigbee2mqtt/data/database.db
+    cp $tmpdir/usr/lib/node_modules/zigbee2mqtt/data/state.json /usr/lib/node_modules/zigbee2mqtt/data/state.json
+fi
+
+echo "[*] Copy influxdb"
+if [ -e $tmpdir/etc/influxdb/influxdb.conf ]
+then
+    cp $tmpdir/etc/influxdb/influxdb.conf /etc/influxdb/influxdb.conf
+fi
+if [ -e $tmpdir/var/lib/influxdb ]
+then
+    cp -R $tmpdir/var/lib/influxdb /var/lib/
+fi
+
+echo "[*] Copy Grafana"
+if [ -e $tmpdir/etc/grafana/grafana.ini ]
+then
+    cp -R $tmpdir/etc/grafana $tmpdir/etc/
+fi
+if [ -e $tmpdir/var/lib/grafana ]
+then
+    cp -R $tmpdir/var/lib/grafana /var/lib/
+fi
 
 sync
 umount $tmpdir

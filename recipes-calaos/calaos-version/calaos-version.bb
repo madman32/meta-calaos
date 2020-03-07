@@ -1,7 +1,7 @@
 # Inspired by Angstrom recipe angstrom-version.Bb
 
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=4d92cd373abda3937c2bc47fbc49d690"
+LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
 PV = "${DISTRO_VERSION}"
 
@@ -48,6 +48,9 @@ do_install() {
              echo "ANSI_COLOR=\"1;35\"" >> ${D}${sysconfdir}/os-release
              echo "HOME_URL=\"http://www.calaos.fr\"" >> ${D}${sysconfdir}/os-release
 }
+
+INHIBIT_PACKAGE_STRIP = "1"
+INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 
 RPROVIDES_${PN} = "os-release"
 RREPLACES_${PN} = "os-release"

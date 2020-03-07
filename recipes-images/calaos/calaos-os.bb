@@ -9,9 +9,10 @@ IMAGE_FEATURES_append_intel-core2-32 = " x11-base"
 IMAGE_LINGUAS = "en-us fr-fr de-de es-es hi-in"
 
 IMAGE_INSTALL += "haproxy"
-IMAGE_INSTALL += "calaos-server calaos-web"
+IMAGE_INSTALL += "calaos-server calaos-web calaos-server-dbg"
 IMAGE_INSTALL += "calaos-mobile calaos-mobile-tools"
 IMAGE_INSTALL += "calaos-ddns"
+IMAGE_INSTALL += "influxd influx grafana"
 
 IMAGE_INSTALL += "lua-socket"
 IMAGE_INSTALL += "heyu"

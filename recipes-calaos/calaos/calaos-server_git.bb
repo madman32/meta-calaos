@@ -10,7 +10,7 @@ RDEPENDS_${PN} += "heyu lua-socket ola knxd imagemagick curl mosquitto mosquitto
 PE = "1"
 PV = "3.1-rc1+${PR}+git${SRCPV}"
 
-SRCREV = "0bb72ab0fd2fabb59cdb97591abe7364605b73e1"
+SRCREV = "81b6f0e69b3d79665c8c20cb93a1aff19624c89a"
 
 SECTION = "utils"
 

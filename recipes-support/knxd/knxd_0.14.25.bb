@@ -28,7 +28,6 @@ do_install_append() {
     install -d ${D}${sysconfdir}
     install -m 0644 ${WORKDIR}/knxd.conf ${D}${sysconfdir}
 
-    rm ${D}${sysconfdir}/knxd.conf
     rm -r ${D}${libdir}/sysusers.d
 }
 

@@ -33,3 +33,11 @@ SERIAL_CONSOLES_intel-corei7-64 = ""
 SERIAL_CONSOLES_intel-corei2-32 = ""
 APPEND_intel-corei7-64 = " rootwait"
 APPEND_intel-corei2-32 = " rootwait"
+
+IMAGE_PREPROCESS_COMMAND_append = " symlink_lib64; "
+
+#Add link to /lib64 -> /lib for some packages to work
+symlink_lib64() {
+    ln -s /lib ${IMAGE_ROOTFS}/lib64
+}
+

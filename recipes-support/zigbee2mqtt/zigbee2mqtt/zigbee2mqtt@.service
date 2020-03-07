@@ -1,6 +1,6 @@
 [Unit]
 Description=Zigbee to MQTT bridge
-BindTo=dev-%i.target
+BindTo=dev-%i.device
 After=dev-%i.device
 
 [Service]
