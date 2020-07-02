@@ -3,7 +3,7 @@ Description=2hour timer for starting calaos dns update
 
 [Timer]
 OnBootSec=1min
-OnActiveSec=2h
+OnUnitActiveSec=2h
 AccuracySec=30min
 Unit=calaos-dns.service
 
