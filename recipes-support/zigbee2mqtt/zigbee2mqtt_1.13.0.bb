@@ -10,8 +10,8 @@ SRC_URI = " \
     file://zigbee2mqtt_confport \
 "
 
-SRC_URI[md5sum] = "b14b40410019c281961965437daa5fd2"
-SRC_URI[sha256sum] = "d468a7312610c79aedcb15d0d54d027bcb80102898b51b2ab2cb76c448322a40"
+SRC_URI[md5sum] = "0d63f83807e94f052eb46b5496fa5345"
+SRC_URI[sha256sum] = "6dfdeb097dd15c282c7857e8a86608d8b13b6827ec60d93ce63784558f50e6c3"
 
 DEPENDS += " nodejs"
 RDEPENDS_${PN} += " nodejs mosquitto"
@@ -32,4 +32,4 @@ do_install_append() {
 }
 
 SYSTEMD_SERVICE_${PN} = "zigbee2mqtt@.service"
-
+SYSTEMD_AUTO_ENABLE_${PN} = "disable"

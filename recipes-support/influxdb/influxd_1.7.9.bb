@@ -8,6 +8,7 @@ SRC_URI += "\
 "
 
 GO_IMPORT = "github.com/influxdata/influxdb/cmd/influxd"
+GO_LINKSHARED = ""
 
 do_install_append() {
     install -d ${D}${systemd_unitdir}/system
