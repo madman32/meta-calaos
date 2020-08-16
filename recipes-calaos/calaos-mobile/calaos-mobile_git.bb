@@ -6,10 +6,10 @@ HOMEPAGE = "http://www.calaos.fr"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING.GPL;md5=d32239bcb673463ab874e80d47fae504"
 
-SRC_URI = "git://github.com/calaos/calaos_mobile.git;protocol=https;branch=master \
+SRC_URI = "git://github.com/madman32/calaos_mobile.git;protocol=https;branch=master \
            file://calaos-home.service \
           "
-SRCREV = "515b62aa45186c54fe6c7f1a4bef4dd01c939ec1"
+SRCREV = "acac0f445a09d135194163e0e335a92cd0854a3b"
 S = "${WORKDIR}/git/"
 
 inherit systemd
