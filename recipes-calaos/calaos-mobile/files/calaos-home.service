@@ -5,6 +5,7 @@ After=xserver-nodm.service
 [Service]
 Environment=DISPLAY=:0
 Environment=QTWEBENGINE_CHROMIUM_FLAGS="--no-sandbox"
+Environment=QT_QPA_PLATFORM=eglfs
 ExecStart=/usr/bin/calaos_home_qt --config /etc/calaos --cache /home/root/.cache/calaos
 Restart=always
 RestartSec=0
